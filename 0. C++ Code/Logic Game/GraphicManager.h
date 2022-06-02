@@ -48,11 +48,9 @@ class GraphicManager
 {
 public:
     
-    void            drawSprite  (IMAGE_NAME name, float posX, float posY);
+    void drawSprite  (IMAGE_NAME name, float posX, float posY);
     //size: [0-1]
-    NFont::Rectf    drawFont    (FONT_NAME name, float posX,
-                                 float posY, float size,
-                                 const string& msg);
+    NFont::Rectf drawFont (FONT_NAME name, float posX, float posY, float size, const string& msg);
     
     
     static GraphicManager *getInstance()

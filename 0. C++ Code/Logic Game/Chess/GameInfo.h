@@ -1,10 +1,3 @@
-//
-//  GameInfo.h
-//  LearnChess
-//
-//  Created by Enric Vergara on 24/2/22.
-//
-
 #ifndef GameInfo_h
 #define GameInfo_h
 

@@ -57,7 +57,7 @@ int main(int argc, const char* argv[])
         // Actualitza la pantalla
         pantalla.update();
 
-    } while (!Keyboard_GetKeyTrg(KEYBOARD_ESCAPE));
+    } while (!Keyboard_GetKeyTrg(KEYBOARD_ESCAPE) && !pantalla.isExit());
     // Sortim del bucle si pressionem ESC
 
     game.end();
