@@ -32,9 +32,16 @@ bool CurrentGame::updateAndRender(int mousePosX, int mousePosY, bool mouseStatus
     //TODO 1: Interactuar amb la crida per dibuixar gràfics (sprites).
     // 	      Dibuixar a pantalla el gràfic amb el tauler buit.
     //--------------------------------------------------------------
+    
+    
     GraphicManager::getInstance()->drawSprite(IMAGE_BOARD, 0, 0);
-    if(mouseStatus)
-        GraphicManager::getInstance()->drawSprite(IMAGE_PIECE_PAWN_WHITE, CELL_INIT_X, CELL_INIT_Y);
+    
+    chessBoard.render();
+    //if(mouseStatus)
+        //GraphicManager::getInstance()->drawSprite(IMAGE_PIECE_PAWN_WHITE, CELL_INIT_X, CELL_INIT_Y);
+    
+        
+        
     //TODO 1.1 Afegir l'include de GraphicManager --> #include "../GraphicManager.h"
     //TODO 1.2 Fer la crida de dibuixar un sprite --> GraphicManager::getInstance()->drawSprite(image, posX, posY);
     //	    Per començar podem cridar el drawSprite amb els params --> (IMAGE_BOARD,0,0)

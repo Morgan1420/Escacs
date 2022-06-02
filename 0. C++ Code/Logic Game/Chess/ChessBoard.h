@@ -21,17 +21,24 @@ public:
 
     // Metodes auxiliars
     bool posicioValida(ChessPosition posAuxiliar, ChessPosition pos);
+    void render();
+    bool posicioDinsVector(const ChessPosition& pos, VecOfPositions vectorPos);
+
+    // relacionats directament amb Piece
     ChessPieceColor GetPieceColorAtPos(ChessPosition pos) const;
     ChessPieceType GetPieceTypeAtPos(ChessPosition pos) const;
     bool getMogudaPiece(const ChessPosition pos);
     void setNovaPiece(ChessPosition pos, ChessPieceColor color, ChessPieceType tipus, bool moguda);
-    bool posicioDinsVector(const ChessPosition& pos, VecOfPositions vectorPos);
 
+    // Analisis
     void analisiDiagonals(const ChessPosition& pos, VecOfPositions& vectorPos);
     void analisiVerticals(const ChessPosition& pos, VecOfPositions& vectorPos);
     void analisiHoritzontals(const ChessPosition& pos, VecOfPositions& vectorPos);
     void analisiPeo(const ChessPosition& pos, VecOfPositions& vectorPos);
     void analisiCavall(const ChessPosition& pos, VecOfPositions& vectorPos);
+
+    
+
 private:
     Piece m_tauler[NUM_COLS][NUM_ROWS];
 

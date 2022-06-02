@@ -6,6 +6,9 @@
 #include <fstream>
 #include "ChessPosition.h"
 
+#include "CurrentGame.hpp"
+#include "GameInfo.h"
+#include "../GraphicManager.h"
 
 
 using namespace std;
@@ -51,7 +54,7 @@ public:
 
 	//metodes
 	string pieceToString() const;
-
+	void render(int posX, int posY);
 
 private:
 	ChessPosition pos;

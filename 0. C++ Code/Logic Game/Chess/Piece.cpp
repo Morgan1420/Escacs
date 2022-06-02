@@ -60,3 +60,55 @@ string Piece::pieceToString() const
 
 	return str;
 }
+
+void Piece::render(int posX, int posY)
+{
+	if (m_color == CPC_White) {
+		switch (m_tipus)
+		{
+		case CPT_King:
+			GraphicManager::getInstance()->drawSprite(IMAGE_PIECE_KING_WHITE, CELL_INIT_X, CELL_INIT_Y);
+			break;
+		case CPT_Queen:
+			GraphicManager::getInstance()->drawSprite(IMAGE_PIECE_QUEEN_WHITE, CELL_INIT_X, CELL_INIT_Y);
+			break;
+		case CPT_Bishop:
+			GraphicManager::getInstance()->drawSprite(IMAGE_PIECE_BISHOP_WHITE, CELL_INIT_X, CELL_INIT_Y);
+			break;
+		case CPT_Knight:
+			GraphicManager::getInstance()->drawSprite(IMAGE_PIECE_KNIGHT_WHITE, CELL_INIT_X, CELL_INIT_Y);
+			break;
+		case CPT_Rook:
+			GraphicManager::getInstance()->drawSprite(IMAGE_PIECE_ROOK_WHITE, CELL_INIT_X, CELL_INIT_Y);
+			break;
+		case CPT_Pawn:
+			GraphicManager::getInstance()->drawSprite(IMAGE_PIECE_PAWN_WHITE, CELL_INIT_X, CELL_INIT_Y);
+			break;
+		}
+	}
+	else if (m_color == CPC_Black)
+	{
+		switch (m_tipus)
+		{
+		case CPT_King:
+			GraphicManager::getInstance()->drawSprite(IMAGE_PIECE_KING_BLACK, CELL_INIT_X, CELL_INIT_Y);
+			break;
+		case CPT_Queen:
+			GraphicManager::getInstance()->drawSprite(IMAGE_PIECE_QUEEN_BLACK, CELL_INIT_X, CELL_INIT_Y);
+			break;
+		case CPT_Bishop:
+			GraphicManager::getInstance()->drawSprite(IMAGE_PIECE_BISHOP_BLACK, CELL_INIT_X, CELL_INIT_Y);
+			break;
+		case CPT_Knight:
+			GraphicManager::getInstance()->drawSprite(IMAGE_PIECE_KNIGHT_BLACK, CELL_INIT_X, CELL_INIT_Y);
+			break;
+		case CPT_Rook:
+			GraphicManager::getInstance()->drawSprite(IMAGE_PIECE_ROOK_BLACK, CELL_INIT_X, CELL_INIT_Y);
+			break;
+		case CPT_Pawn:
+			GraphicManager::getInstance()->drawSprite(IMAGE_PIECE_PAWN_BLACK, CELL_INIT_X, CELL_INIT_Y);
+			break;
+		}
+	}
+	
+}

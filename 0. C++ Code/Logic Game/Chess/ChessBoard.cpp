@@ -224,3 +224,14 @@ void Chessboard::setNovaPiece(ChessPosition pos, ChessPieceColor color, ChessPie
 	m_tauler[pos.getPosicioX()][pos.getPosicioY()].setTipus(tipus);
 	m_tauler[pos.getPosicioX()][pos.getPosicioY()].setMoguda(moguda);
 }
+
+void Chessboard::render()
+{
+	for (int posX = 0; posX < NUM_COLS; posX++)
+	{
+		for (int posY = 0; posY < NUM_ROWS; posY++)
+		{
+			m_tauler[posX][posY].render(CELL_INIT_X + CELL_W * posX, CELL_INIT_Y + CELL_H * posY);
+		}
+	}
+}
