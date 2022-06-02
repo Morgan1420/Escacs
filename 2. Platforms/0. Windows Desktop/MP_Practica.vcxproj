@@ -161,6 +161,10 @@
     <ClCompile Include="..\..\0. C++ Code\Logic Game\Chess\CurrentGame.cpp" />
     <ClCompile Include="..\..\0. C++ Code\Logic Game\GraphicManager.cpp" />
     <ClCompile Include="..\..\0. C++ Code\Logic Game\main.cpp" />
+    <ClCompile Include="ChessBoard.cpp" />
+    <ClCompile Include="ChessPosition.cpp" />
+    <ClCompile Include="Piece.cpp" />
+    <ClCompile Include="ValidMoves.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\0. C++ Code\Graphic Lib\debug.h" />
@@ -180,6 +184,9 @@
     <ClInclude Include="..\..\0. C++ Code\Logic Game\Chess\CurrentGame.hpp" />
     <ClInclude Include="..\..\0. C++ Code\Logic Game\Chess\GameInfo.h" />
     <ClInclude Include="..\..\0. C++ Code\Logic Game\GraphicManager.h" />
+    <ClInclude Include="ChessBoard.h" />
+    <ClInclude Include="ChessPosition.h" />
+    <ClInclude Include="Piece.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
