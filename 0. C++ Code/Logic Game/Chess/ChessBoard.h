@@ -10,10 +10,6 @@ typedef vector<ChessPosition> VecOfPositions;
 class Chessboard
 {
 public:
-    // Constructors
-    Chessboard();
-
-    // Setters       
 
     // Getters
     Piece getPiece(int x, int y) { return m_tauler[x][y]; }

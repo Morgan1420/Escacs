@@ -161,7 +161,9 @@
     <ClCompile Include="..\..\0. C++ Code\Logic Game\Chess\CurrentGame.cpp" />
     <ClCompile Include="..\..\0. C++ Code\Logic Game\GraphicManager.cpp" />
     <ClCompile Include="..\..\0. C++ Code\Logic Game\main.cpp" />
-    <ClCompile Include="ChessBoard.cpp" />
+    <ClCompile Include="ChessBoard.cpp">
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</SDLCheck>
+    </ClCompile>
     <ClCompile Include="ChessPosition.cpp" />
     <ClCompile Include="Piece.cpp" />
     <ClCompile Include="ValidMoves.cpp" />
