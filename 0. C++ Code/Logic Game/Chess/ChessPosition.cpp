@@ -41,7 +41,7 @@ ChessPosition::ChessPosition(const std::string& pos_str)
 		break;
 	}
 
-	// Mirem la seva posició vertical
+	// Mirem la seva posiciÃ³ vertical
 	switch (pos_str.at(1))
 	{
 	case '1':
@@ -81,15 +81,15 @@ bool ChessPosition::operator==(ChessPosition pos) const
 	return iguals;
 }
 
-string ChessPosition::toString() const
+string ChessPosition::toString() const 
 {
-	string res = "__";
+	string res ="__";
 	char x = m_posX + 96;
-	if (m_posX < 8 && m_posX >= 1)
+	if(m_posX < 8 && m_posX >= 1)
 		res[0] = x;
 
 	char y = m_posY + 48;
-	if (m_posY < 8 && m_posY >= 1)
+	if(m_posY < 8 && m_posY >= 1)
 		res[1] = y;
 
 	return res;

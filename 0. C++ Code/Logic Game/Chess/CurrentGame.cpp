@@ -36,9 +36,8 @@ bool CurrentGame::updateAndRender(int mousePosX, int mousePosY, bool mouseStatus
     
     GraphicManager::getInstance()->drawSprite(IMAGE_BOARD, 0, 0);
     
-    chessBoard.render();
-    //if(mouseStatus)
-        //GraphicManager::getInstance()->drawSprite(IMAGE_PIECE_PAWN_WHITE, CELL_INIT_X, CELL_INIT_Y);
+    //chessBoard.render();
+    
     
         
         

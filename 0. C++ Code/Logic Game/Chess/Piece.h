@@ -26,7 +26,7 @@ typedef enum
 	CPT_EMPTY
 }ChessPieceType;
 
-typedef enum
+typedef enum 
 {
 	// S'assigna un nom per a cada color de la Piece
 	CPC_Black,
@@ -55,6 +55,7 @@ public:
 	//metodes
 	string pieceToString() const;
 	void render(int posX, int posY);
+
 
 private:
 	ChessPosition pos;

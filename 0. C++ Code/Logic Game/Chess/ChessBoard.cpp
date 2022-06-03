@@ -1,5 +1,9 @@
 #include "ChessBoard.h"
 
+#include "CurrentGame.hpp"
+#include "GameInfo.h"
+#include "../GraphicManager.h"
+
 // ---------------------------------------------------------------------------------------- llegir arxiu
 void Chessboard::LoadBoardFromFile(const string& nomFitxer)
 {
@@ -57,7 +61,7 @@ void Chessboard::LoadBoardFromFile(const string& nomFitxer)
 			break;
 		}
 
-		// Mirem la seva posició Horitzontal
+		// Mirem la seva posiciÃ³ Horitzontal
 		switch (linea.at(4))
 		{
 		case 'a':
@@ -86,7 +90,7 @@ void Chessboard::LoadBoardFromFile(const string& nomFitxer)
 			break;
 		}
 
-		// Mirem la seva posició vertical
+		// Mirem la seva posiciÃ³ vertical
 		switch (linea.at(5))
 		{
 		case '1':
@@ -200,7 +204,7 @@ ChessPieceType Chessboard::GetPieceTypeAtPos(ChessPosition pos) const
 
 bool Chessboard::getMogudaPiece(const ChessPosition pos)
 {
-	// les uniques peces que depenen de si s'han mogut previament són el rei, les torres i els peons
+	// les uniques peces que depenen de si s'han mogut previament sÃ³n el rei, les torres i els peons
 	bool moguda = m_tauler[pos.getPosicioX()][pos.getPosicioY()].getMoguda();
 
 	if (!moguda)
@@ -225,13 +229,16 @@ void Chessboard::setNovaPiece(ChessPosition pos, ChessPieceColor color, ChessPie
 	m_tauler[pos.getPosicioX()][pos.getPosicioY()].setMoguda(moguda);
 }
 
-void Chessboard::render()
+
+void Chessboard::render() 
 {
-	for (int posX = 0; posX < NUM_COLS; posX++)
+	//GraphicManager::getInstance()->drawSprite(IMAGE_PIECE_BISHOP_WHITE, 0, 0);
+
+	/*for (int posX = 0; posX < NUM_COLS; posX++)
 	{
-		for (int posY = 0; posY < NUM_ROWS; posY++)
+		for (int posY = 0; posY < NUM_COLS; posY++)
 		{
-			m_tauler[posX][posY].render(CELL_INIT_X + CELL_W * posX, CELL_INIT_Y + CELL_H * posY);
+			m_tauler[posX][posY].render(CELL_INIT_X + posX * CELL_W, CELL_INIT_Y + posY * CELL_H);
 		}
-	}
+	}*/
 }
