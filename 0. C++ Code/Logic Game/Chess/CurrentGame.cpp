@@ -21,6 +21,7 @@ void CurrentGame::init(GameMode mode, const string& intitialBoardFile, const str
 {
     GraphicManager::getInstance()->drawSprite(IMAGE_PIECE_PAWN_WHITE, 0, 0);
     chessBoard.LoadBoardFromFile(intitialBoardFile);
+    casellesResaltar.clear();
 }
 
 
@@ -36,36 +37,11 @@ bool CurrentGame::updateAndRender(int mousePosX, int mousePosY, bool mouseStatus
     //--------------------------------------------------------------
     
     
-    GraphicManager::getInstance()->drawSprite(IMAGE_BOARD, 0, 0);
-    
+    // Renderitzat de les fitxes
+    GraphicManager::getInstance()->drawSprite(IMAGE_BOARD, 0, 0);   
     chessBoard.render();
-    
-    
-        
-        
-    //TODO 1.1 Afegir l'include de GraphicManager --> #include "../GraphicManager.h"
-    //TODO 1.2 Fer la crida de dibuixar un sprite --> GraphicManager::getInstance()->drawSprite(image, posX, posY);
-    //	    Per començar podem cridar el drawSprite amb els params --> (IMAGE_BOARD,0,0)
-
-
-    
-
-
-
-    //TODO 1.3: Dibuixar a pantalla el gràfic amb el tauler i un peó blanc a la posició (0,0) de la pantalla
- 
-
-
-    //TODO 1.3: Dibuixar a pantalla el gràfic amb el tauler i un peó blanc a la casella (0,0) del tauler
- 
-
-
-
-    //TODO 1.4: Dibuixar a pantalla el gràfic amb el tauler i un peó blanc a la casella (posX, posY) del tauler
- 
- 
-
-
+    for(int i = 0; i < casellesResaltar.size(); i++)
+        GraphicManager::getInstance()->drawSprite(IMAGE_VALID_POS, CELL_INIT_X + CELL_W * casellesResaltar.at(i).getPosicioX(), CELL_INIT_Y + CELL_H * casellesResaltar.at(i).getPosicioY());
 
 
     //TODO 2: Interacció amb el mouse
@@ -73,8 +49,30 @@ bool CurrentGame::updateAndRender(int mousePosX, int mousePosY, bool mouseStatus
     // TODO 2.1: Dibuixar el peó a sobre del tauler només si estem pressionant el botó esquerre del mouse
     //          Si no l'estem pressionant només s'ha de dibuixar el tauler sense el peó
 
- 
+    int posX = 0;
+    bool trobat = false;
+    while (posX < NUM_COLS && !trobat)
+    {
+        int  posY = 0;
+        while (posY < NUM_ROWS && !trobat)
+        {
+            if (mouseStatus && (CELL_INIT_X + CELL_W * posX < mousePosX) && (mousePosX < CELL_INIT_X + CELL_W * (posX + 1)) && (CELL_INIT_Y + CELL_H * posY < mousePosY) && (mousePosY < CELL_INIT_Y + CELL_H * (posY + 1)))
+            {
+                ChessPosition pos(posX, posY);
+                casellesResaltar = chessBoard.GetValidMoves(pos);
+                trobat = true;
+            }
+            posY++;
+        }
+        posX++;
+    }
+    
 
+
+    int posTextX = CELL_INIT_X;
+    int posTextY = CELL_INIT_Y + (CELL_H * NUM_ROWS) + 60;
+    std::string msg = "PosX: " + to_string(mousePosX) + ", PosY: " + to_string(mousePosY);
+    GraphicManager::getInstance()->drawFont(FONT_RED_30, posTextX, posTextY, 0.8, msg);
 
 
 

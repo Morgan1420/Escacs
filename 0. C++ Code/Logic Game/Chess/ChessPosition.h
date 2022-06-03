@@ -8,6 +8,7 @@ public:
 	// Constructors
 	ChessPosition();		// Falta fer i mirar si cal fer un constructor amb parametres
 	ChessPosition(const std::string& pos_str);
+	ChessPosition(const int x, const int y) { m_posX = x; m_posY = y; }
 
 	// Setters
 	void setPosicioX(int num) { m_posX = num; }
