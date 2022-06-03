@@ -5,6 +5,8 @@
 #include <string>
 #include "GameInfo.h"
 
+#include "ChessBoard.h"
+
 using namespace std;
 
 
@@ -21,7 +23,7 @@ public:
     
     
 private:
-    
+    Chessboard chessBoard;
 };
 
 #endif /* CurrentGame_hpp */

@@ -40,6 +40,18 @@
     <ClCompile Include="..\..\0. C++ Code\Logic Game\Chess\CurrentGame.cpp">
       <Filter>Logic Game\Chess</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\0. C++ Code\Logic Game\Chess\ChessBoard.cpp">
+      <Filter>Logic Game\Chess</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\0. C++ Code\Logic Game\Chess\ChessPosition.cpp">
+      <Filter>Logic Game\Chess</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\0. C++ Code\Logic Game\Chess\Piece.cpp">
+      <Filter>Logic Game\Chess</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\0. C++ Code\Logic Game\Chess\ValidMoves.cpp">
+      <Filter>Logic Game\Chess</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\0. C++ Code\Logic Game\GraphicManager.h">
@@ -91,6 +103,15 @@
       <Filter>Logic Game\Chess</Filter>
     </ClInclude>
     <ClInclude Include="..\..\0. C++ Code\Logic Game\Chess\GameInfo.h">
+      <Filter>Logic Game\Chess</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\0. C++ Code\Logic Game\Chess\ChessBoard.h">
+      <Filter>Logic Game\Chess</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\0. C++ Code\Logic Game\Chess\ChessPosition.h">
+      <Filter>Logic Game\Chess</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\0. C++ Code\Logic Game\Chess\Piece.h">
       <Filter>Logic Game\Chess</Filter>
     </ClInclude>
   </ItemGroup>
