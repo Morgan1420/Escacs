@@ -1,8 +1,5 @@
 #include "ChessBoard.h"
 
-#include "CurrentGame.hpp"
-#include "GameInfo.h"
-#include "../GraphicManager.h"
 
 // ---------------------------------------------------------------------------------------- llegir arxiu
 void Chessboard::LoadBoardFromFile(const string& nomFitxer)
@@ -234,11 +231,11 @@ void Chessboard::render()
 {
 	//GraphicManager::getInstance()->drawSprite(IMAGE_PIECE_BISHOP_WHITE, 0, 0);
 
-	/*for (int posX = 0; posX < NUM_COLS; posX++)
+	for (int posX = 0; posX < NUM_COLS; posX++)
 	{
 		for (int posY = 0; posY < NUM_COLS; posY++)
 		{
 			m_tauler[posX][posY].render(CELL_INIT_X + posX * CELL_W, CELL_INIT_Y + posY * CELL_H);
 		}
-	}*/
+	}
 }

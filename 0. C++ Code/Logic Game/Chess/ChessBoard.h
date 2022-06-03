@@ -2,10 +2,6 @@
 #include "Piece.h"
 #include "ChessPosition.h"
 
-#include "CurrentGame.hpp"
-#include "GameInfo.h"
-#include "../GraphicManager.h"
-
 #define NUM_ROWS 8
 #define NUM_COLS 8
 

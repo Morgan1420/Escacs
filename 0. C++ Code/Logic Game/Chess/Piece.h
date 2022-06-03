@@ -6,7 +6,6 @@
 #include <fstream>
 #include "ChessPosition.h"
 
-#include "CurrentGame.hpp"
 #include "GameInfo.h"
 #include "../GraphicManager.h"
 

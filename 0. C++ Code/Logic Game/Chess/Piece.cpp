@@ -1,8 +1,6 @@
 #include "Piece.h"
 
-#include "CurrentGame.hpp"
-#include "GameInfo.h"
-#include "../GraphicManager.h"
+
 // ----------------------- Constructors 
 Piece::Piece()
 {
@@ -67,7 +65,7 @@ string Piece::pieceToString() const
 void Piece::render(int posX, int posY)
 {
 
-	/*if (m_color == CPC_Black)
+	if (m_color == CPC_Black)
 	{
 		switch(m_tipus)
 		{
@@ -114,5 +112,5 @@ void Piece::render(int posX, int posY)
 			GraphicManager::getInstance()->drawSprite(IMAGE_PIECE_PAWN_WHITE, posX, posY);
 			break;
 		}
-	}*/
+	}
 }

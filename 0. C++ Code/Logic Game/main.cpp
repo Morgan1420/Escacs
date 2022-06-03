@@ -28,7 +28,7 @@
 
 #include "./Chess/CurrentGame.hpp"
 #include "./Chess/GameInfo.h"
-
+#include "Chess/ChessBoard.h"
 
 int main(int argc, const char* argv[])
 {

@@ -9,6 +9,7 @@
 #include "GameInfo.h"
 #include "../GraphicManager.h"
 
+#include "ChessBoard.h"
 
 CurrentGame::CurrentGame()
 {
@@ -18,6 +19,7 @@ CurrentGame::CurrentGame()
 
 void CurrentGame::init(GameMode mode, const string& intitialBoardFile, const string& movementsFile)
 {
+    GraphicManager::getInstance()->drawSprite(IMAGE_PIECE_PAWN_WHITE, 0, 0);
     chessBoard.LoadBoardFromFile(intitialBoardFile);
 }
 
@@ -36,7 +38,7 @@ bool CurrentGame::updateAndRender(int mousePosX, int mousePosY, bool mouseStatus
     
     GraphicManager::getInstance()->drawSprite(IMAGE_BOARD, 0, 0);
     
-    //chessBoard.render();
+    chessBoard.render();
     
     
         
