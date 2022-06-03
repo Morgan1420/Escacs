@@ -24,6 +24,7 @@ public:
     
 private:
     Chessboard chessBoard;
+    VecOfPositions casellesResaltar;
 };
 
 #endif /* CurrentGame_hpp */
