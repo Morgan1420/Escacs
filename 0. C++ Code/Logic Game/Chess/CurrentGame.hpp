@@ -5,6 +5,8 @@
 #include <string>
 #include "GameInfo.h"
 
+#include <Windows.h>
+
 #include "ChessBoard.h"
 
 using namespace std;
