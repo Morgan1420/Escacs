@@ -83,8 +83,6 @@ bool CurrentGame::updateAndRender(int mousePosX, int mousePosY, bool mouseStatus
                         m_torn = CPC_White;
                     else
                         m_torn = CPC_Black;
-
-                    Sleep(100);
                     
                 }
 
