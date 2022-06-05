@@ -11,9 +11,11 @@ class Chessboard
 {
 public:   
 
-    // Getters
+    // Getters i Setters
     Piece getPiece(int x, int y) { return m_tauler[x][y]; }
-    
+    ChessPosition getCasellaSeleccionada() { return m_casellaSeleccionada; }
+    void setCasellaSeleccionada(ChessPosition casella) { m_casellaSeleccionada = casella; }
+
     // Metodes de la clase
     void LoadBoardFromFile(const string& nomFitxer); // Cal copiar i modificar el metode loadFromFile de Source.cpp
     VecOfPositions GetValidMoves(const ChessPosition& pos);
@@ -39,7 +41,7 @@ public:
     void analisiCavall(const ChessPosition& pos, VecOfPositions& vectorPos);
 private:
     Piece m_tauler[NUM_COLS][NUM_ROWS];
-
+    ChessPosition m_casellaSeleccionada;
 };
 
 
