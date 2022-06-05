@@ -27,6 +27,7 @@ public:
 private:
     Chessboard chessBoard;
     VecOfPositions casellesResaltar;
+    ChessPieceColor m_torn;
 };
 
 #endif /* CurrentGame_hpp */

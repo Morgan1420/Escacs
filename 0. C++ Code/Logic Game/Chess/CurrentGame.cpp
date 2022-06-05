@@ -19,10 +19,11 @@ CurrentGame::CurrentGame()
 
 void CurrentGame::init(GameMode mode, const string& intitialBoardFile, const string& movementsFile)
 {
-    // Dibuixem el tauler i les fitxes a resaltar
+    // Dibuixem el tauler, eliminem les fitxes a resaltar i asignem el 1r torn a les blanques;
     GraphicManager::getInstance()->drawSprite(IMAGE_PIECE_PAWN_WHITE, 0, 0);
     chessBoard.LoadBoardFromFile(intitialBoardFile);
     casellesResaltar.clear();
+    m_torn = CPC_White;
 }
 
 
@@ -66,15 +67,23 @@ bool CurrentGame::updateAndRender(int mousePosX, int mousePosY, bool mouseStatus
                 if (!moure)
                 {
                     ChessPosition pos(posX, posY);
-                    chessBoard.setCasellaSeleccionada(pos);
-                    casellesResaltar = chessBoard.GetValidMoves(chessBoard.getCasellaSeleccionada());
-                    
+                    if (chessBoard.GetPieceColorAtPos(pos) == m_torn)
+                    {
+                        chessBoard.setCasellaSeleccionada(pos);
+                        casellesResaltar = chessBoard.GetValidMoves(chessBoard.getCasellaSeleccionada());
+                    }                    
                 }
                 else
                 {
                     ChessPosition desti(posX, posY);
                     chessBoard.MovePiece(chessBoard.getCasellaSeleccionada(), desti);
                     casellesResaltar.clear();
+                    
+                    if (m_torn == CPC_Black)
+                        m_torn = CPC_White;
+                    else
+                        m_torn = CPC_Black;
+
                     Sleep(100);
                     
                 }
