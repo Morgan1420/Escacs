@@ -32,6 +32,7 @@ public:
     bool getMogudaPiece(const ChessPosition pos);
     void setNovaPiece(ChessPosition pos, ChessPieceColor color, ChessPieceType tipus, bool moguda);
     bool MovePiece(const ChessPosition& posFrom, const ChessPosition& posTo);
+    void peonsAReines();
 
     // analisis
     void analisiDiagonals(const ChessPosition& pos, VecOfPositions& vectorPos);

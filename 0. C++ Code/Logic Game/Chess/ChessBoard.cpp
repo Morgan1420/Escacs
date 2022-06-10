@@ -137,6 +137,7 @@ bool Chessboard::MovePiece(const ChessPosition& posFrom, const ChessPosition& po
 	{
 		setNovaPiece(posTo, m_tauler[posFrom.getPosicioX()][posFrom.getPosicioY()].getColor(), m_tauler[posFrom.getPosicioX()][posFrom.getPosicioY()].getTipus(), m_tauler[posFrom.getPosicioX()][posFrom.getPosicioY()].getMoguda());
 		setNovaPiece(posFrom, CPC_NONE, CPT_EMPTY, 0);
+		peonsAReines(); 
 
 		esPot = true;
 	}
@@ -188,7 +189,7 @@ string Chessboard::taulaToString() const
 
 
 
-// funcions auxiliars que ens permeten jugar amb les fitxes amb l'objectiu d'acotar codi
+// ---------------------------------------------------------------------- funcions auxiliars 
 ChessPieceColor Chessboard::GetPieceColorAtPos(ChessPosition pos) const
 {
 	return m_tauler[pos.getPosicioX()][pos.getPosicioY()].getColor();
@@ -218,6 +219,17 @@ bool Chessboard::getMogudaPiece(const ChessPosition pos)
 	return moguda;
 }
 
+void Chessboard::peonsAReines()
+{
+	for (int row = 0; row < 2; row++)
+	{
+		for (int col = 0; col < NUM_COLS; col++)
+		{
+			if (m_tauler[col][(NUM_ROWS - 1) * row].getTipus() == CPT_Pawn)
+				m_tauler[col][(NUM_ROWS - 1) * row].setTipus(CPT_Queen);			
+		}
+	}
+}
 
 void Chessboard::setNovaPiece(ChessPosition pos, ChessPieceColor color, ChessPieceType tipus, bool moguda)
 {
@@ -227,6 +239,7 @@ void Chessboard::setNovaPiece(ChessPosition pos, ChessPieceColor color, ChessPie
 }
 
 
+// --------------------------------------------------------------------------------- render
 void Chessboard::render() 
 {
 	//GraphicManager::getInstance()->drawSprite(IMAGE_PIECE_BISHOP_WHITE, 0, 0);
