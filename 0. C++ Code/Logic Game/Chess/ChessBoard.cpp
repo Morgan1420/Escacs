@@ -129,12 +129,14 @@ void Chessboard::LoadBoardFromFile(const string& nomFitxer)
 
 
 // ---------------------------------------------------------------------------------------- moure fitxa
-bool Chessboard::MovePiece(const ChessPosition& posFrom, const ChessPosition& posTo)
+bool Chessboard::MovePiece(const ChessPosition& posFrom, const ChessPosition& posTo, bool& gameOver)
 {
 	bool esPot = false;
 
 	if (GetPieceColorAtPos(posFrom) != CPC_NONE && posicioDinsVector(posTo, GetValidMoves(posFrom)))
 	{
+		if (GetPieceTypeAtPos(posTo) == CPT_King)
+			gameOver = true;
 		setNovaPiece(posTo, m_tauler[posFrom.getPosicioX()][posFrom.getPosicioY()].getColor(), m_tauler[posFrom.getPosicioX()][posFrom.getPosicioY()].getTipus(), 1);
 		setNovaPiece(posFrom, CPC_NONE, CPT_EMPTY, 1);
 		peonsAReines(); 
@@ -213,6 +215,12 @@ void Chessboard::peonsAReines()
 				m_tauler[col][(NUM_ROWS - 1) * row].setTipus(CPT_Queen);			
 		}
 	}
+}
+
+bool checkmate() 
+{
+
+	return false;
 }
 
 bool Chessboard::posicioDinsVector(const ChessPosition& pos, VecOfPositions vectorPos)

@@ -20,14 +20,15 @@ public:
     
     void init(GameMode mode, const string& intitialBoardFile, const string& movementsFile);
 	bool updateAndRender(int mousePosX, int mousePosY, bool mouseStatus);
+    void printWinner ();
     void end();  
-    
-    
+
     
 private:
     Chessboard chessBoard;
     VecOfPositions casellesResaltar;
     ChessPieceColor m_torn;
+    bool m_gameOver;
 };
 
 #endif /* CurrentGame_hpp */

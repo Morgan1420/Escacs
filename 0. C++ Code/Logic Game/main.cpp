@@ -44,21 +44,26 @@ int main(int argc, const char* argv[])
 	CurrentGame game;
     game.init(GM_NORMAL, "data/Games/board.txt", "data/Games/movements.txt");
 
+    bool final = false;
     do
-    {
+    {   
         // Captura tots els events de ratolí i teclat de l'ultim cicle
         pantalla.processEvents();
 
         bool mouseStatus = Mouse_getBtnLeft();
         int mousePosX = Mouse_getX();
         int mousePosY = Mouse_getY();
-        bool final = game.updateAndRender(mousePosX, mousePosY, mouseStatus);
 
+        // juguem mentre es pugui
+        if (!final)
+            final = game.updateAndRender(mousePosX, mousePosY, mouseStatus);
+        else
+            game.printWinner();
         // Actualitza la pantalla
         pantalla.update();
 
     } while (!Keyboard_GetKeyTrg(KEYBOARD_ESCAPE) && !pantalla.isExit());
-    // Sortim del bucle si pressionem ESC
+    // Sortim del bucle si pressionem ESC o la creueta
 
     game.end();
 

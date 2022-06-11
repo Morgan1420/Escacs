@@ -24,12 +24,7 @@ void CurrentGame::init(GameMode mode, const string& intitialBoardFile, const str
     chessBoard.LoadBoardFromFile(intitialBoardFile);
     casellesResaltar.clear();
     m_torn = CPC_White;
-}
-
-
-void CurrentGame::end()
-{
-
+    m_gameOver = false;
 }
 
 bool CurrentGame::updateAndRender(int mousePosX, int mousePosY, bool mouseStatus) 
@@ -76,7 +71,7 @@ bool CurrentGame::updateAndRender(int mousePosX, int mousePosY, bool mouseStatus
                 else
                 {
                     ChessPosition desti(posX, posY);
-                    chessBoard.MovePiece(chessBoard.getCasellaSeleccionada(), desti);
+                    chessBoard.MovePiece(chessBoard.getCasellaSeleccionada(), desti, m_gameOver);
                     casellesResaltar.clear();
                     
                     if (m_torn == CPC_Black)
@@ -103,40 +98,21 @@ bool CurrentGame::updateAndRender(int mousePosX, int mousePosY, bool mouseStatus
     GraphicManager::getInstance()->drawFont(FONT_RED_30, posTextX, posTextY, 0.8, msg);
 
 
-    
-    // TODO 2.2 Dibuixar el peó a sobre del tauler només si estem pressionant el botó esquerre del mouse dins dels límits del tauler
-    //          Si no l'estem pressionant o l'estem pressionant fora dels límits del tauler només s'ha de dibuixar el tauler sense el peó
 
-
-
-
-
-    // TODO 2.3 Dibuixar el peó a sobre del tauler només si estem pressionant el botó esquerre del mouse dins dels límits del tauler
-    //          S'ha de dibuixar el peó a la casella sobre la que estem clicant amb el ratolí
-    //          Si no l'estem pressionant o l'estem pressionant fora dels límits del tauler només s'ha de dibuixar el tauler sense el peó
- 
-
-
-
-
-
-    //TODO 3: Imprimir text per pantalla
-    //------------------------------------------
-    // TODO 3.1: Imprimir les coordenades de la posició actual del ratolí a sota del tauler
-
-
-
-
-
-
-
-    //TODO 4: Mostrar l’estat inicial del joc amb totes les peces col·locades a la seva posició inicial
-    //------------------------------------------
- 
-
-
-
-    return false;
+    return m_gameOver;
 
 }
 
+void CurrentGame::printWinner()
+{
+    std::string guanyador (m_torn == CPC_White ? "Negres" : "Blanques");
+    std::string msg = "Guanyen les " + guanyador + "!!";
+    
+    GraphicManager::getInstance()->drawFont(FONT_RED_30, 50, 260, 2, msg);
+}
+
+
+void CurrentGame::end()
+{
+
+}
