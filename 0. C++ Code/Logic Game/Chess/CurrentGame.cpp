@@ -73,6 +73,8 @@ bool CurrentGame::updateAndRender(int mousePosX, int mousePosY, bool mouseStatus
                     ChessPosition desti(posX, posY);
                     chessBoard.MovePiece(chessBoard.getCasellaSeleccionada(), desti, m_gameOver);
                     casellesResaltar.clear();
+
+                    
                     
                     if (m_torn == CPC_Black)
                         m_torn = CPC_White;
@@ -82,6 +84,7 @@ bool CurrentGame::updateAndRender(int mousePosX, int mousePosY, bool mouseStatus
                 }
 
                 trobat = true;
+
                 
             }
             posY++;
@@ -89,12 +92,12 @@ bool CurrentGame::updateAndRender(int mousePosX, int mousePosY, bool mouseStatus
         posX++;
     }
     
-
-
+    this->printTorn();
+    
 
     int posTextX = CELL_INIT_X;
-    int posTextY = CELL_INIT_Y + (CELL_H * NUM_ROWS) + 60;
-    std::string msg = "PosX: " + to_string(mousePosX) + ", PosY: " + to_string(mousePosY);
+    int posTextY = CELL_INIT_Y + (CELL_H * NUM_ROWS)  + 60  ;
+    std::string msg = "PosX: "  /* + to_string(mousePosX) + ", PosY: " + to_string(mousePosY)*/;
     GraphicManager::getInstance()->drawFont(FONT_RED_30, posTextX, posTextY, 0.8, msg);
 
 
@@ -109,6 +112,14 @@ void CurrentGame::printWinner()
     std::string msg = "Guanyen les " + guanyador + "!!";
     
     GraphicManager::getInstance()->drawFont(FONT_RED_30, 50, 260, 2, msg);
+}
+
+void CurrentGame::printTorn()
+{
+    std::string torn(m_torn == CPC_White ? "Negres" : "Blanques");
+   
+    std::string msg = "Torn de les: " + torn;
+    GraphicManager::getInstance()->drawFont(FONT_RED_30, 330, 640, 0.8, msg);
 }
 
 

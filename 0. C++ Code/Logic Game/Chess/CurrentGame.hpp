@@ -22,7 +22,7 @@ public:
 	bool updateAndRender(int mousePosX, int mousePosY, bool mouseStatus);
     void printWinner ();
     void end();  
-
+    void printTorn();
     
 private:
     Chessboard chessBoard;

@@ -1,10 +1,10 @@
 #include "ChessBoard.h"
+#
 
 
 // ---------------------------------------------------------------------------------------- llegir arxiu
 void Chessboard::LoadBoardFromFile(const string& nomFitxer)
 {
-
 	ifstream fitxer(nomFitxer);
 	string linea;
 
@@ -127,6 +127,41 @@ void Chessboard::LoadBoardFromFile(const string& nomFitxer)
 	fitxer.close();
 }
 
+void Chessboard::reproduccioPosicions()
+{
+	ifstream fitxer("moviments:guardats.txt");
+
+	if (fitxer.is_open() && !fitxer.eof())
+	{
+		m_reproduint = 1;
+		Chessboard posFrom;
+		Chessboard posTo;
+		fitxer >> posFrom >> posTo;
+		MovePiece(posFrom, posTo, 0);
+
+		while (!fitxer.eof())
+		{
+			fitxer >> posFrom >> posTo;
+			MovePiece(posFrom, posTo, 0);
+		}
+		
+	}
+
+	fitxer.close();
+
+}
+
+void Chessboard::guardaPosicioAFitxer(const ChessPosition& posFrom, const ChessPosition& posTo)
+{
+	ofstream fitxer("moviments_guardats.txt");
+
+	if (fitxer.is_open())
+	{
+		fitxer << posFrom << " " << posTo;
+	}
+
+	fitxer.close();
+}
 
 // ---------------------------------------------------------------------------------------- moure fitxa
 bool Chessboard::MovePiece(const ChessPosition& posFrom, const ChessPosition& posTo, bool& gameOver)
@@ -139,10 +174,14 @@ bool Chessboard::MovePiece(const ChessPosition& posFrom, const ChessPosition& po
 			gameOver = true;
 		setNovaPiece(posTo, m_tauler[posFrom.getPosicioX()][posFrom.getPosicioY()].getColor(), m_tauler[posFrom.getPosicioX()][posFrom.getPosicioY()].getTipus(), 1);
 		setNovaPiece(posFrom, CPC_NONE, CPT_EMPTY, 1);
-		peonsAReines(); 
+		peonsAReines();
+		if(m_reproduint == 0;)
+			guardaPosicioAFitxer(posFrom, posTo);
 
 		esPot = true;
 	}
+
+
 
 	return esPot;
 }
@@ -219,6 +258,7 @@ void Chessboard::peonsAReines()
 
 bool checkmate() 
 {
+
 
 	return false;
 }
