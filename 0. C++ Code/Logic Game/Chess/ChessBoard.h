@@ -11,7 +11,7 @@ class Chessboard
 {
 public:   
     // Constructor
-    Chessboard() : m_gameOver(false) m_reproduint(false) {}
+    Chessboard() : m_gameOver(false) m_reproduint(false) m_reiAtacat(false) {}
 
     // Getters i Setters
     Piece getPiece(int x, int y) { return m_tauler[x][y]; }
@@ -37,6 +37,8 @@ public:
     void peonsAReines();
     void guardaPosicioAFitxer(const ChessPosition& posFrom, const ChessPosition& posTo);
     void reproduccioPosicions();
+    bool check(ChessPosition posicion, ChessPosition posicionRei);
+    bool checkMate(VecOfPositions& vec, ChessPosition posicionRei);
 
     // analisis
     void analisiDiagonals(const ChessPosition& pos, VecOfPositions& vectorPos);
@@ -44,11 +46,13 @@ public:
     void analisiHoritzontals(const ChessPosition& pos, VecOfPositions& vectorPos);
     void analisiPeo(const ChessPosition& pos, VecOfPositions& vectorPos);
     void analisiCavall(const ChessPosition& pos, VecOfPositions& vectorPos);
+
 private:
     Piece m_tauler[NUM_COLS][NUM_ROWS];
     ChessPosition m_casellaSeleccionada;
     bool m_gameOver;
     bool m_reproduint;
+    bool m_reiAtacat;
 };
 
 

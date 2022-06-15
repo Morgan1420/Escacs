@@ -256,9 +256,64 @@ void Chessboard::peonsAReines()
 	}
 }
 
-bool checkmate() 
-{
+/*
+Jaque seria, si una pieza del color contrario a un rey puede llegar a este, entonces el rey se podria mover para evitar esto || otra pieza podria matar
+a la pieza atacante (incluido el rey) || una pieza se puede interponer entre la trayectoria del rey y la pieza atacante. El rey
+no puede ir a una posicion donde puedan matarlo, quitar del vector de posiciones donde puede ir el rey aquellas posiciones donde pueda ser matado
+o quitar del vector de posiciones donde puede ir una pieza que moviendose, puedan matar al rey
 
+Jaque mate seria Jaque && el rey no se puede mover && le estan atacando
+
+
+Tambien hay que tener en cuenta que, si el rey no esta atacado, al mover cualquier ficha, podria estar atacado, entonces no se puede mover 
+
+*/
+
+
+//la idea es que check sea una subfuncion de checkmate
+
+bool Chessboard::check(ChessPosition posicion, ChessPosition posicionRei) //crec q fa algo semblant a posicioDinsVector() pero yolo
+{
+	bool check = false;
+	
+	VecOfPositions aux;
+
+	aux = GetValidMoves(posicion);
+
+	for (int i = 0; i < aux.size(); i++)
+	{
+		if (aux[i] == posicionRei)
+			check = true;
+	}
+
+	if (check)
+		m_reiAtacat = true;
+
+	return check;
+}
+
+//si el rei esta atacado
+
+bool Chessboard::checkMate(VecOfPositions &vec, ChessPosition posicionRei) //rep un vector de posicions valides per al rei
+{
+	bool checkMate = false;
+
+	for (int i = 0; i < NUM_ROWS; i++)
+	{
+		for (int j = 0; j < NUM_COLS ; j++)
+		{
+			if (m_tauler[i][j].getTipus() != CPC_NONE) //no faria falta aquest if per que a getValidMoves no contempla les posicions posibles de una casella vuida pero yolo
+			{
+				if (check(m_tauler[i][j].getPosicion(), posicionRei))
+				{
+					//aqui tengo que hacer que el rei se mueva si o si (o sea que no pueda mover las otras fichas a no ser que salven al rey)
+
+				}
+			}
+		}
+	}
+
+	
 
 	return false;
 }

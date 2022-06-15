@@ -50,6 +50,7 @@ public:
 	ChessPieceColor getColor() const { return m_color; }
 	ChessPieceType getTipus() const { return m_tipus; }
 	bool getMoguda() const { return m_moguda; }
+	ChessPosition getPosicion() const { return pos; }
 
 	//metodes
 	string pieceToString() const;

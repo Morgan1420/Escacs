@@ -32,6 +32,8 @@ VecOfPositions Chessboard::GetValidMoves(const ChessPosition& pos)
 			}
 		}
 
+		//añadir funcion jaque mate
+
 		break;
 
 	case CPT_Queen: //amb diagonal NE em refereixo a la diagonal de adalt a la dreta ns  si m'entens rbro v 
