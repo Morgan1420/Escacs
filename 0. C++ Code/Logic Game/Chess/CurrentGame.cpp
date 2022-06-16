@@ -89,13 +89,11 @@ bool CurrentGame::updateAndRender(int mousePosX, int mousePosY, bool mouseStatus
         posX++;
     }
     
+    printTorn();
 
 
 
-    int posTextX = CELL_INIT_X;
-    int posTextY = CELL_INIT_Y + (CELL_H * NUM_ROWS) + 60;
-    std::string msg = "PosX: " + to_string(mousePosX) + ", PosY: " + to_string(mousePosY);
-    GraphicManager::getInstance()->drawFont(FONT_RED_30, posTextX, posTextY, 0.8, msg);
+   
 
 
 
@@ -103,6 +101,7 @@ bool CurrentGame::updateAndRender(int mousePosX, int mousePosY, bool mouseStatus
 
 }
 
+// -------------------------------------------------------------------------------------- prints 
 void CurrentGame::printWinner()
 {
     std::string guanyador (m_torn == CPC_White ? "Negres" : "Blanques");
@@ -111,7 +110,17 @@ void CurrentGame::printWinner()
     GraphicManager::getInstance()->drawFont(FONT_RED_30, 50, 260, 2, msg);
 }
 
+void CurrentGame::printTorn()
+{
+    int posTextX = CELL_INIT_X;
+    int posTextY = CELL_INIT_Y + (CELL_H * NUM_ROWS) + 60;
 
+    std::string torn(m_torn == CPC_Black ? "Negres" : "Blanques");
+    std::string msg = "Torn de les " + torn;
+    GraphicManager::getInstance()->drawFont(FONT_RED_30, posTextX, posTextY, 0.8, msg);
+}
+
+// -------------------------------------------------------------------------------------- end
 void CurrentGame::end()
 {
 

@@ -18,12 +18,16 @@ class CurrentGame {
 public:
     CurrentGame();
     
+    // init, update i end
     void init(GameMode mode, const string& intitialBoardFile, const string& movementsFile);
 	bool updateAndRender(int mousePosX, int mousePosY, bool mouseStatus);
-    void printWinner ();
     void end();  
 
-    
+    // metodes de joc
+
+    // prints
+    void printWinner();
+    void printTorn();
 private:
     Chessboard chessBoard;
     VecOfPositions casellesResaltar;
