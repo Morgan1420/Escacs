@@ -166,11 +166,11 @@ void Chessboard::guardaPosicioAFitxer(const ChessPosition& posFrom, const ChessP
 }
 
 // ---------------------------------------------------------------------------------------- moure fitxa
-bool Chessboard::MovePiece(const ChessPosition& posFrom, const ChessPosition& posTo, bool& gameOver)
+bool Chessboard::MovePiece(const ChessPosition& posFrom, const ChessPosition& posTo, bool& gameOver, ChessPieceColor torn)
 {
 	bool esPot = false;
 
-	if (GetPieceColorAtPos(posFrom) != CPC_NONE && posicioDinsVector(posTo, GetValidMoves(posFrom)))
+	if (GetPieceColorAtPos(posFrom) != CPC_NONE && posicioDinsVector(posTo, GetValidMoves(posFrom, torn)))
 	{
 		if (GetPieceTypeAtPos(posTo) == CPT_King)
 			gameOver = true;
@@ -299,9 +299,9 @@ bool Chessboard::checkAux(ChessPosition posicion, ChessPosition posicionRei) //c
 
 //si el rei esta atacado
 
-bool Chessboard::check(VecOfPositions &vec, ChessPosition posicionRei) //rep un vector de posicions valides per al rei
+VecOfPositions Chessboard::check(VecOfPositions &vec, ChessPosition posicionRei) //rep un vector de posicions valides per al rei
 {
-	bool checkMate = false;
+	VecOfPositions atacants;
 
 	for (int i = 0; i < NUM_ROWS; i++)
 	{
@@ -311,18 +311,28 @@ bool Chessboard::check(VecOfPositions &vec, ChessPosition posicionRei) //rep un 
 			{
 				if (checkAux(m_tauler[i][j].getPosicion(), posicionRei))
 				{
-					checkMate = true;
+					atacants.push_back(m_tauler[i][j].getPosicion());
 				}
 			}
 		}
 	}
 
-	return false;
+	return atacants;
 }
 
 ChessPosition Chessboard::buscarRei(ChessPieceColor color)
 {
+	ChessPosition posicioRei;
+	for (int  i = 0; i < NUM_ROWS; i++)
+	{
+		for (int j = 0; j < NUM_COLS; j++)
+		{
+			if (m_tauler[i][j].getColor() == color && m_tauler[i][j].getTipus() == CPT_King)
+				posicioRei = m_tauler[i][j].getPosicion();
+		}
+	}
 
+	return posicioRei;
 
 }
 

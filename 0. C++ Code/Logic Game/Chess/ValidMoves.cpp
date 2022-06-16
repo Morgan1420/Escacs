@@ -1,7 +1,8 @@
 #include "ChessBoard.h"
+#include "CurrentGame.hpp"
 
 
-VecOfPositions Chessboard::GetValidMoves(const ChessPosition& pos)
+VecOfPositions Chessboard::GetValidMoves(const ChessPosition& pos, ChessPieceColor torn)
 {
 	/*
 	REI:			REINA:			TORRE:			CABALL			ALFIL:		 	PEO
@@ -16,11 +17,6 @@ VecOfPositions Chessboard::GetValidMoves(const ChessPosition& pos)
 	ChessPosition posAuxiliar;
 	//Si el rey esta atacat (m_reiAtacat = true) fer que les altres peces es puguin moure si i nomes si salvin al rey
 	//Matar peça atacant, posar-se al mitg entre  rei i peça atacant
-
-	
-
-
-
 
 
 	switch (m_tauler[pos.getPosicioX()][pos.getPosicioY()].getTipus())
@@ -40,7 +36,7 @@ VecOfPositions Chessboard::GetValidMoves(const ChessPosition& pos)
 			}
 		}
 
-		if (check(vectorPos, pos))
+		if (check(vectorPos, pos).size()!=0)
 		{
 			vector<ChessPosition>::iterator aux ;
 			int i = 0;
@@ -48,7 +44,9 @@ VecOfPositions Chessboard::GetValidMoves(const ChessPosition& pos)
 			//si hi ha una posicio on es pugui moure el rei (estant atacat) on, si es mou, el poden matar, treure posicio valida aquella casella
 			for (aux=vectorPos.begin(); aux != vectorPos.end(); aux++)
 			{
-				if (check(vectorPos, vectorPos[i]))
+
+				//si una fitxa pot atacar a una posicio on pot anar el rei, llavors el rei no pot anar alla
+				if (check(vectorPos, vectorPos[i]).size()!=0)
 				{
 					vectorPos.erase(aux);
 				}
@@ -64,6 +62,11 @@ VecOfPositions Chessboard::GetValidMoves(const ChessPosition& pos)
 		analisiDiagonals(pos, vectorPos);
 		analisiHoritzontals(pos, vectorPos);
 		analisiVerticals(pos, vectorPos);
+
+		if (check(vectorPos, buscarRei(getTorn(torn))).size() != 0)
+		{
+
+		}
 
 		break;
 

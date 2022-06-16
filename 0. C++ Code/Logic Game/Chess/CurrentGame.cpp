@@ -70,6 +70,7 @@ bool CurrentGame::updateAndRender(int mousePosX, int mousePosY, bool mouseStatus
                     {
                         chessBoard.setCasellaSeleccionada(pos);
                         casellesResaltar = chessBoard.GetValidMoves(chessBoard.getCasellaSeleccionada());
+                        
                     }                    
                 }
                 else
@@ -84,6 +85,8 @@ bool CurrentGame::updateAndRender(int mousePosX, int mousePosY, bool mouseStatus
                         m_torn = CPC_White;
                     else
                         m_torn = CPC_Black;
+
+                    
                     
                 }
 
@@ -130,4 +133,9 @@ void CurrentGame::printTorn()
 void CurrentGame::end()
 {
 
+}
+
+ChessPieceColor getTorn() 
+{
+    
 }

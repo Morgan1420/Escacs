@@ -1,6 +1,7 @@
 #pragma once
 #include "Piece.h"
 #include "ChessPosition.h"
+#include "CurrentGame.hpp"  
 
 #define NUM_ROWS 8
 #define NUM_COLS 8
@@ -20,7 +21,7 @@ public:
 
     // Metodes de la clase
     void LoadBoardFromFile(const string& nomFitxer); // Cal copiar i modificar el metode loadFromFile de Source.cpp
-    VecOfPositions GetValidMoves(const ChessPosition& pos);
+    VecOfPositions GetValidMoves(const ChessPosition& pos, ChessPieceColor torn);
     string taulaToString() const;
 
     // Metodes auxiliars
@@ -33,12 +34,12 @@ public:
     ChessPieceType GetPieceTypeAtPos(ChessPosition pos) const;
     bool getMogudaPiece(const ChessPosition pos);
     void setNovaPiece(ChessPosition pos, ChessPieceColor color, ChessPieceType tipus, bool moguda);
-    bool MovePiece(const ChessPosition& posFrom, const ChessPosition& posTo, bool& gameOver);
+    bool MovePiece(const ChessPosition& posFrom, const ChessPosition& posTo, bool& gameOver, ChessPieceColor torn); //cambio
     void peonsAReines();
     void guardaPosicioAFitxer(const ChessPosition& posFrom, const ChessPosition& posTo);
     void reproduccioPosicions();
     bool checkAux(ChessPosition posicion, ChessPosition posicionRei);
-    bool check(VecOfPositions& vec, ChessPosition posicionRei);
+    VecOfPositions check(VecOfPositions& vec, ChessPosition posicionRei);
     ChessPosition buscarRei(ChessPieceColor color); //cal fer
 
     // analisis
@@ -48,13 +49,17 @@ public:
     void analisiPeo(const ChessPosition& pos, VecOfPositions& vectorPos);
     void analisiCavall(const ChessPosition& pos, VecOfPositions& vectorPos);
 
+    ChessPieceColor getTorn(ChessPieceColor color) { return color; }
+    
+
 private:
     Piece m_tauler[NUM_COLS][NUM_ROWS];
     ChessPosition m_casellaSeleccionada;
     bool m_gameOver;
-    bool m_reproduint;
+    bool m_reproduint; //GameMode???
     bool m_reiAtacat;
 };
+
 
 
 /*

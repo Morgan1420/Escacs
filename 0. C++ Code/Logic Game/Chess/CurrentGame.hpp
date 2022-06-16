@@ -23,6 +23,8 @@ public:
     void printWinner ();
     void end();  
     void printTorn();
+
+    ChessPieceColor getTornA() { return m_torn; }
     
 private:
     Chessboard chessBoard;
