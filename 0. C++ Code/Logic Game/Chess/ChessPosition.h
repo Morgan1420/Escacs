@@ -21,6 +21,7 @@ public:
 	// Metodes
 	bool operator==(const ChessPosition pos) const;
 
+
 	string toString() const;
 	// hauriem de fer una funció que llegeixi una posició del usuari en format string(ex: wP (peo blanc), bK (rei negre))
 
@@ -29,3 +30,4 @@ private:
 };
 
 ostream& operator<<(ostream& output, const ChessPosition& pos);
+istream& operator>>(istream& output, const ChessPosition& pos);

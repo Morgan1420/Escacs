@@ -11,7 +11,7 @@ class Chessboard
 {
 public:   
     // Constructor
-    Chessboard() : m_gameOver(false) m_reproduint(false) m_reiAtacat(false) {}
+    Chessboard() { m_gameOver = false; m_reproduint = false; m_reiAtacat = false; }
 
     // Getters i Setters
     Piece getPiece(int x, int y) { return m_tauler[x][y]; }
@@ -37,8 +37,9 @@ public:
     void peonsAReines();
     void guardaPosicioAFitxer(const ChessPosition& posFrom, const ChessPosition& posTo);
     void reproduccioPosicions();
-    bool check(ChessPosition posicion, ChessPosition posicionRei);
-    bool checkMate(VecOfPositions& vec, ChessPosition posicionRei);
+    bool checkAux(ChessPosition posicion, ChessPosition posicionRei);
+    bool check(VecOfPositions& vec, ChessPosition posicionRei);
+    ChessPosition buscarRei(ChessPieceColor color); //cal fer
 
     // analisis
     void analisiDiagonals(const ChessPosition& pos, VecOfPositions& vectorPos);
@@ -69,3 +70,4 @@ private:
         6   PEO     PEO     PEO     PEO     PEO     PEO     PEO     PEO
         7   TORRE   CAVALL  ALFIL   DAMA    REI     ALFIL   CAVALL  TORRE
 */
+

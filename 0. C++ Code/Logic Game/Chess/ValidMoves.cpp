@@ -14,6 +14,14 @@ VecOfPositions Chessboard::GetValidMoves(const ChessPosition& pos)
 
 	VecOfPositions vectorPos;
 	ChessPosition posAuxiliar;
+	//Si el rey esta atacat (m_reiAtacat = true) fer que les altres peces es puguin moure si i nomes si salvin al rey
+	//Matar peça atacant, posar-se al mitg entre  rei i peça atacant
+
+	
+
+
+
+
 
 	switch (m_tauler[pos.getPosicioX()][pos.getPosicioY()].getTipus())
 	{
@@ -32,7 +40,23 @@ VecOfPositions Chessboard::GetValidMoves(const ChessPosition& pos)
 			}
 		}
 
-		//añadir funcion jaque mate
+		if (check(vectorPos, pos))
+		{
+			vector<ChessPosition>::iterator aux ;
+			int i = 0;
+
+			//si hi ha una posicio on es pugui moure el rei (estant atacat) on, si es mou, el poden matar, treure posicio valida aquella casella
+			for (aux=vectorPos.begin(); aux != vectorPos.end(); aux++)
+			{
+				if (check(vectorPos, vectorPos[i]))
+				{
+					vectorPos.erase(aux);
+				}
+
+				i++;
+			}			
+		}
+		//else if(casiCheck())     si no estan atacant al rei directament pero si moc aquesta peça el poden atacar 
 
 		break;
 

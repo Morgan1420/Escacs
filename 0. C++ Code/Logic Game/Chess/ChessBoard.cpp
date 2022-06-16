@@ -130,19 +130,21 @@ void Chessboard::LoadBoardFromFile(const string& nomFitxer)
 void Chessboard::reproduccioPosicions()
 {
 	ifstream fitxer("moviments:guardats.txt");
+	bool a = 0;
 
 	if (fitxer.is_open() && !fitxer.eof())
 	{
 		m_reproduint = 1;
-		Chessboard posFrom;
-		Chessboard posTo;
+		ChessPosition posFrom;
+		ChessPosition posTo;
 		fitxer >> posFrom >> posTo;
-		MovePiece(posFrom, posTo, 0);
+		 
+		MovePiece(posFrom, posTo, a);
 
 		while (!fitxer.eof())
 		{
 			fitxer >> posFrom >> posTo;
-			MovePiece(posFrom, posTo, 0);
+			MovePiece(posFrom, posTo, a);
 		}
 		
 	}
@@ -175,7 +177,8 @@ bool Chessboard::MovePiece(const ChessPosition& posFrom, const ChessPosition& po
 		setNovaPiece(posTo, m_tauler[posFrom.getPosicioX()][posFrom.getPosicioY()].getColor(), m_tauler[posFrom.getPosicioX()][posFrom.getPosicioY()].getTipus(), 1);
 		setNovaPiece(posFrom, CPC_NONE, CPT_EMPTY, 1);
 		peonsAReines();
-		if(m_reproduint == 0;)
+
+		if(m_reproduint == 0)
 			guardaPosicioAFitxer(posFrom, posTo);
 
 		esPot = true;
@@ -272,7 +275,7 @@ Tambien hay que tener en cuenta que, si el rey no esta atacado, al mover cualqui
 
 //la idea es que check sea una subfuncion de checkmate
 
-bool Chessboard::check(ChessPosition posicion, ChessPosition posicionRei) //crec q fa algo semblant a posicioDinsVector() pero yolo
+bool Chessboard::checkAux(ChessPosition posicion, ChessPosition posicionRei) //crec q fa algo semblant a posicioDinsVector() pero yolo
 {
 	bool check = false;
 	
@@ -288,13 +291,15 @@ bool Chessboard::check(ChessPosition posicion, ChessPosition posicionRei) //crec
 
 	if (check)
 		m_reiAtacat = true;
+	else
+		m_reiAtacat = false;
 
 	return check;
 }
 
 //si el rei esta atacado
 
-bool Chessboard::checkMate(VecOfPositions &vec, ChessPosition posicionRei) //rep un vector de posicions valides per al rei
+bool Chessboard::check(VecOfPositions &vec, ChessPosition posicionRei) //rep un vector de posicions valides per al rei
 {
 	bool checkMate = false;
 
@@ -304,18 +309,21 @@ bool Chessboard::checkMate(VecOfPositions &vec, ChessPosition posicionRei) //rep
 		{
 			if (m_tauler[i][j].getTipus() != CPC_NONE) //no faria falta aquest if per que a getValidMoves no contempla les posicions posibles de una casella vuida pero yolo
 			{
-				if (check(m_tauler[i][j].getPosicion(), posicionRei))
+				if (checkAux(m_tauler[i][j].getPosicion(), posicionRei))
 				{
-					//aqui tengo que hacer que el rei se mueva si o si (o sea que no pueda mover las otras fichas a no ser que salven al rey)
-
+					checkMate = true;
 				}
 			}
 		}
 	}
 
-	
-
 	return false;
+}
+
+ChessPosition Chessboard::buscarRei(ChessPieceColor color)
+{
+
+
 }
 
 bool Chessboard::posicioDinsVector(const ChessPosition& pos, VecOfPositions vectorPos)

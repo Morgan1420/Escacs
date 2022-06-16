@@ -103,3 +103,10 @@ ostream& operator<<(ostream& output, const ChessPosition& pos)
 
 	return output;
 }
+
+istream& operator>>(istream& output, const ChessPosition& pos)
+{
+	output >> pos.toString();
+
+	return output;
+}
