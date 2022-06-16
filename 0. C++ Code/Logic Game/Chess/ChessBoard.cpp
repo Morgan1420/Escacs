@@ -1,6 +1,4 @@
 #include "ChessBoard.h"
-#
-
 
 // ---------------------------------------------------------------------------------------- llegir arxiu
 void Chessboard::LoadBoardFromFile(const string& nomFitxer)
@@ -127,14 +125,16 @@ void Chessboard::LoadBoardFromFile(const string& nomFitxer)
 	fitxer.close();
 }
 
-void Chessboard::reproduccioPosicions()
+
+// ---------------------------------------------- que es aixó?
+/*void Chessboard::reproduccioPosicions(const string& nomFitxer)
 {
-	ifstream fitxer("moviments:guardats.txt");
+	ifstream fitxer(nomFitxer);
 	bool a = 0;
 
 	if (fitxer.is_open() && !fitxer.eof())
 	{
-		m_reproduint = 1;
+		m_reproduint = true;
 		ChessPosition posFrom;
 		ChessPosition posTo;
 		fitxer >> posFrom >> posTo;
@@ -151,19 +151,17 @@ void Chessboard::reproduccioPosicions()
 
 	fitxer.close();
 
-}
+}*/
 
-void Chessboard::guardaPosicioAFitxer(const ChessPosition& posFrom, const ChessPosition& posTo)
+/*void Chessboard::guardaPosicioAFitxer(const string& nomFitxer, const ChessPosition& posFrom, const ChessPosition& posTo) // arreglar
 {
-	ofstream fitxer("moviments_guardats.txt");
+	ofstream fitxer(nomFitxer);
 
 	if (fitxer.is_open())
-	{
-		fitxer << posFrom << " " << posTo;
-	}
+		fitxer << posFrom << " " << posTo << "\n";
 
 	fitxer.close();
-}
+}*/
 
 // ---------------------------------------------------------------------------------------- moure fitxa
 bool Chessboard::MovePiece(const ChessPosition& posFrom, const ChessPosition& posTo, bool& gameOver, ChessPieceColor torn)
@@ -178,8 +176,8 @@ bool Chessboard::MovePiece(const ChessPosition& posFrom, const ChessPosition& po
 		setNovaPiece(posFrom, CPC_NONE, CPT_EMPTY, 1);
 		peonsAReines();
 
-		if(m_reproduint == 0)
-			guardaPosicioAFitxer(posFrom, posTo);
+		/*if(m_reproduint == 0)
+			guardaPosicioAFitxer(posFrom, posTo);*/
 
 		esPot = true;
 	}
@@ -188,7 +186,6 @@ bool Chessboard::MovePiece(const ChessPosition& posFrom, const ChessPosition& po
 
 	return esPot;
 }
-
 
 // ---------------------------------------------------------------------------------------- taula to string
 string Chessboard::taulaToString() const
@@ -208,15 +205,12 @@ string Chessboard::taulaToString() const
 		}
 
 		taulaStr.append("\n");
-
 	}
 
 	// afegim els noms de les files
 	taulaStr.append("  a  b  c  d  e  f  g  h");
 	return taulaStr;
 }
-
-
 
 // --------------------------------------------------------------------------------------- getters de les peces 
 ChessPieceColor Chessboard::GetPieceColorAtPos(ChessPosition pos) const
@@ -245,7 +239,6 @@ void Chessboard::setNovaPiece(ChessPosition pos, ChessPieceColor color, ChessPie
 	m_tauler[pos.getPosicioX()][pos.getPosicioY()].setMoguda(moguda);
 }
 
-
 // ---------------------------------------------------------------------------------------------- altres metodes
 void Chessboard::peonsAReines()
 {
@@ -258,6 +251,10 @@ void Chessboard::peonsAReines()
 		}
 	}
 }
+
+
+
+
 
 /*
 Jaque seria, si una pieza del color contrario a un rey puede llegar a este, entonces el rey se podria mover para evitar esto || otra pieza podria matar
@@ -274,7 +271,7 @@ Tambien hay que tener en cuenta que, si el rey no esta atacado, al mover cualqui
 
 
 //la idea es que check sea una subfuncion de checkmate
-
+/*
 bool Chessboard::checkAux(ChessPosition posicion, ChessPosition posicionRei) //crec q fa algo semblant a posicioDinsVector() pero yolo
 {
 	bool check = false;
@@ -318,11 +315,14 @@ VecOfPositions Chessboard::check(VecOfPositions &vec, ChessPosition posicionRei)
 	}
 
 	return atacants;
-}
+}*/
 
+
+// ---------------------------------------------------------------------------------------- Buscar a Rei
 ChessPosition Chessboard::buscarRei(ChessPieceColor color)
 {
 	ChessPosition posicioRei;
+	
 	for (int  i = 0; i < NUM_ROWS; i++)
 	{
 		for (int j = 0; j < NUM_COLS; j++)
@@ -336,27 +336,25 @@ ChessPosition Chessboard::buscarRei(ChessPieceColor color)
 
 }
 
-bool Chessboard::posicioDinsVector(const ChessPosition& pos, VecOfPositions vectorPos)
-{
-	int i = 0;
-	bool trobat = false;
-
-	while (!trobat && i < vectorPos.size())
-	{
-		if (pos == vectorPos.at(i))
-			trobat = true;
-		else
-			i++;
-	}
-
-	return trobat;
-}
+//bool Chessboard::posicioDinsVector(const ChessPosition& pos, VecOfPositions vectorPos)
+//{
+//	int i = 0;
+//	bool trobat = false;
+//
+//	while (!trobat && i < vectorPos.size())
+//	{
+//		if (pos == vectorPos.at(i))
+//			trobat = true;
+//		else
+//			i++;
+//	}
+//
+//	return trobat;
+//}
 
 // --------------------------------------------------------------------------------- render
 void Chessboard::render() 
 {
-	//GraphicManager::getInstance()->drawSprite(IMAGE_PIECE_BISHOP_WHITE, 0, 0);
-
 	for (int posX = 0; posX < NUM_COLS; posX++)
 	{
 		for (int posY = 0; posY < NUM_COLS; posY++)

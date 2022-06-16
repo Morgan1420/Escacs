@@ -27,20 +27,24 @@ public:
     // Metodes auxiliars
     bool posicioValida(ChessPosition posAuxiliar, ChessPosition pos);
     void render();
-    bool posicioDinsVector(const ChessPosition& pos, VecOfPositions vectorPos);
+    //bool posicioDinsVector(const ChessPosition& pos, VecOfPositions vectorPos);
+
+    // metodes de joc
+    void peonsAReines();
 
     // metodes directes de Piece
     ChessPieceColor GetPieceColorAtPos(ChessPosition pos) const;
     ChessPieceType GetPieceTypeAtPos(ChessPosition pos) const;
     bool getMogudaPiece(const ChessPosition pos);
     void setNovaPiece(ChessPosition pos, ChessPieceColor color, ChessPieceType tipus, bool moguda);
-    bool MovePiece(const ChessPosition& posFrom, const ChessPosition& posTo, bool& gameOver, ChessPieceColor torn); //cambio
-    void peonsAReines();
-    void guardaPosicioAFitxer(const ChessPosition& posFrom, const ChessPosition& posTo);
-    void reproduccioPosicions();
-    bool checkAux(ChessPosition posicion, ChessPosition posicionRei);
-    VecOfPositions check(VecOfPositions& vec, ChessPosition posicionRei);
+    bool MovePiece(const ChessPosition& posFrom, const ChessPosition& posTo, bool& gameOver, ChessPieceColor torn); //cambio 
+    void guardaPosicioAFitxer(const string& nomFitxer, const ChessPosition& posFrom, const ChessPosition& posTo);
     ChessPosition buscarRei(ChessPieceColor color); //cal fer
+
+    /*bool checkAux(ChessPosition posicion, ChessPosition posicionRei);
+    VecOfPositions check(VecOfPositions& vec, ChessPosition posicionRei);*/
+
+    
 
     // analisis
     void analisiDiagonals(const ChessPosition& pos, VecOfPositions& vectorPos);

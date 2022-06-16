@@ -36,25 +36,6 @@ VecOfPositions Chessboard::GetValidMoves(const ChessPosition& pos, ChessPieceCol
 			}
 		}
 
-		if (check(vectorPos, pos).size()!=0)
-		{
-			vector<ChessPosition>::iterator aux ;
-			int i = 0;
-
-			//si hi ha una posicio on es pugui moure el rei (estant atacat) on, si es mou, el poden matar, treure posicio valida aquella casella
-			for (aux=vectorPos.begin(); aux != vectorPos.end(); aux++)
-			{
-
-				//si una fitxa pot atacar a una posicio on pot anar el rei, llavors el rei no pot anar alla
-				if (check(vectorPos, vectorPos[i]).size()!=0)
-				{
-					vectorPos.erase(aux);
-				}
-
-				i++;
-			}			
-		}
-		//else if(casiCheck())     si no estan atacant al rei directament pero si moc aquesta peça el poden atacar 
 
 		break;
 
@@ -63,10 +44,6 @@ VecOfPositions Chessboard::GetValidMoves(const ChessPosition& pos, ChessPieceCol
 		analisiHoritzontals(pos, vectorPos);
 		analisiVerticals(pos, vectorPos);
 
-		if (check(vectorPos, buscarRei(getTorn(torn))).size() != 0)
-		{
-
-		}
 
 		break;
 

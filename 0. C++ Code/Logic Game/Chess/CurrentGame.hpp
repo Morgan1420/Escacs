@@ -18,11 +18,18 @@ class CurrentGame {
 public:
     CurrentGame();
     
+    // init, update i end
     void init(GameMode mode, const string& intitialBoardFile, const string& movementsFile);
 	bool updateAndRender(int mousePosX, int mousePosY, bool mouseStatus);
-    void printWinner ();
     void end();  
+    
+    // game modes
+    void jugaPartida();
+    void menu();
+
+    // prints
     void printTorn();
+    void printWinner();
 
     ChessPieceColor getTornA() { return m_torn; }
     
