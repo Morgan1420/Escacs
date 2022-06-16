@@ -99,14 +99,14 @@ VecOfPositions Chessboard::GetValidMoves2(const ChessPosition& pos)
 
 void Chessboard::salvarARey(VecOfPositions& vecPos, ChessPieceColor torn)
 {
-	VecOfPositions atacant = check(vectorPos, buscarRei(getTorn(torn)));
+	VecOfPositions atacant = check(vecPos, buscarRei(getTorn(torn)));
 
 	//elimina les posicions que no salven al rey si el rey esta atacat (mata a la fitxa)
 
 	if (atacant.size() != 0)
 	{
-		vector<VecOfPositions>::iterator at;
-		vector<VecOfPositions>::iterator vec;
+		vector<ChessPosition>::iterator at;
+		vector<ChessPosition>::iterator vec;
 		int diferents = 0;
 
 		for (vec = vecPos.begin(); vec != vecPos.end(); vec++)
@@ -129,7 +129,6 @@ void Chessboard::salvarARey(VecOfPositions& vecPos, ChessPieceColor torn)
 
 		//ponerse en el medio
 		//Harry Styles
-
 
 		/*
 			Si puedo meterme en el camino de una pieza atacante me meto (ns como reaccionaria con el caballo)
@@ -166,6 +165,17 @@ void Chessboard::salvarARey(VecOfPositions& vecPos, ChessPieceColor torn)
 VecOfPositions Chessboard::casiCheck(ChessPosition posicionRei, ChessPieceColor torn)
 {
 	VecOfPositions salvadoras;
+
+	Piece taulerAux;
+
+	for (int i = 0; i < NUM_ROWS; i++)
+	{
+		for (int j = 0; j < NUM_COLS; j++)
+		{
+			taulerAux[i][j] = m_tauler[i][j];
+		}
+	}
+
 
 
 

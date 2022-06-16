@@ -137,14 +137,15 @@ void Chessboard::reproduccioPosicions()
 		m_reproduint = 1;
 		ChessPosition posFrom;
 		ChessPosition posTo;
+		ChessPieceColor torn;
 		fitxer >> posFrom >> posTo;
 		 
-		MovePiece(posFrom, posTo, a);
+		MovePiece(posFrom, posTo, a, torn);
 
 		while (!fitxer.eof())
 		{
 			fitxer >> posFrom >> posTo;
-			MovePiece(posFrom, posTo, a);
+			MovePiece(posFrom, posTo, a, torn);
 		}
 		
 	}
@@ -156,10 +157,16 @@ void Chessboard::reproduccioPosicions()
 void Chessboard::guardaPosicioAFitxer(const ChessPosition& posFrom, const ChessPosition& posTo)
 {
 	ofstream fitxer("moviments_guardats.txt");
+	int color;
 
 	if (fitxer.is_open())
 	{
-		fitxer << posFrom << " " << posTo;
+		if (m_tauler[posFrom.getPosicioX()][posFrom.getPosicioY()].getColor() == CPC_White)
+			color = 0;
+		else
+			color = 1;
+
+		fitxer << posFrom << " " << posTo << " " << color;
 	}
 
 	fitxer.close();
@@ -283,7 +290,7 @@ bool Chessboard::checkAux(ChessPosition posicion, ChessPosition posicionRei) //c
 	
 	VecOfPositions aux;
 
-	aux = GetValidMoves(posicion);
+	aux = GetValidMoves2(posicion);
 
 	for (int i = 0; i < aux.size(); i++)
 	{

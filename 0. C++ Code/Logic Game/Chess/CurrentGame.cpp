@@ -69,14 +69,14 @@ bool CurrentGame::updateAndRender(int mousePosX, int mousePosY, bool mouseStatus
                     if (chessBoard.GetPieceColorAtPos(pos) == m_torn)
                     {
                         chessBoard.setCasellaSeleccionada(pos);
-                        casellesResaltar = chessBoard.GetValidMoves(chessBoard.getCasellaSeleccionada());
+                        casellesResaltar = chessBoard.GetValidMoves2(chessBoard.getCasellaSeleccionada());
                         
                     }                    
                 }
                 else
                 {
                     ChessPosition desti(posX, posY);
-                    chessBoard.MovePiece(chessBoard.getCasellaSeleccionada(), desti, m_gameOver);
+                    chessBoard.MovePiece(chessBoard.getCasellaSeleccionada(), desti, m_gameOver, m_torn);
                     casellesResaltar.clear();
 
                     
