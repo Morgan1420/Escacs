@@ -129,14 +129,17 @@ void Chessboard::LoadBoardFromFile(const string& nomFitxer)
 
 
 // ---------------------------------------------------------------------------------------- moure fitxa
-bool Chessboard::MovePiece(const ChessPosition& posFrom, const ChessPosition& posTo)
+bool Chessboard::MovePiece(const ChessPosition& posFrom, const ChessPosition& posTo, bool& gameOver)
 {
 	bool esPot = false;
 
 	if (GetPieceColorAtPos(posFrom) != CPC_NONE && posicioDinsVector(posTo, GetValidMoves(posFrom)))
 	{
-		setNovaPiece(posTo, m_tauler[posFrom.getPosicioX()][posFrom.getPosicioY()].getColor(), m_tauler[posFrom.getPosicioX()][posFrom.getPosicioY()].getTipus(), m_tauler[posFrom.getPosicioX()][posFrom.getPosicioY()].getMoguda());
-		setNovaPiece(posFrom, CPC_NONE, CPT_EMPTY, 0);
+		if (GetPieceTypeAtPos(posTo) == CPT_King)
+			gameOver = true;
+		setNovaPiece(posTo, m_tauler[posFrom.getPosicioX()][posFrom.getPosicioY()].getColor(), m_tauler[posFrom.getPosicioX()][posFrom.getPosicioY()].getTipus(), 1);
+		setNovaPiece(posFrom, CPC_NONE, CPT_EMPTY, 1);
+		peonsAReines(); 
 
 		esPot = true;
 	}
@@ -144,21 +147,6 @@ bool Chessboard::MovePiece(const ChessPosition& posFrom, const ChessPosition& po
 	return esPot;
 }
 
-bool Chessboard::posicioDinsVector(const ChessPosition& pos, VecOfPositions vectorPos)
-{
-	int i = 0;
-	bool trobat = false;
-
-	while (!trobat && i < vectorPos.size())
-	{
-		if (pos == vectorPos.at(i))
-			trobat = true;
-		else
-			i++;
-	}
-
-	return trobat;
-}
 
 // ---------------------------------------------------------------------------------------- taula to string
 string Chessboard::taulaToString() const
@@ -188,7 +176,7 @@ string Chessboard::taulaToString() const
 
 
 
-// funcions auxiliars que ens permeten jugar amb les fitxes amb l'objectiu d'acotar codi
+// --------------------------------------------------------------------------------------- getters de les peces 
 ChessPieceColor Chessboard::GetPieceColorAtPos(ChessPosition pos) const
 {
 	return m_tauler[pos.getPosicioX()][pos.getPosicioY()].getColor();
@@ -204,21 +192,10 @@ bool Chessboard::getMogudaPiece(const ChessPosition pos)
 	// les uniques peces que depenen de si s'han mogut previament són el rei, les torres i els peons
 	bool moguda = m_tauler[pos.getPosicioX()][pos.getPosicioY()].getMoguda();
 
-	if (!moguda)
-	{
-		// Pawn
-		if (GetPieceTypeAtPos(pos) == CPT_Pawn && (pos.getPosicioY() != 1 && pos.getPosicioY() != 6))
-			moguda = true;
-
-		// King
-
-		// Rook
-	}
-
 	return moguda;
 }
 
-
+// --------------------------------------------------------------------------------------------- set Nova piece
 void Chessboard::setNovaPiece(ChessPosition pos, ChessPieceColor color, ChessPieceType tipus, bool moguda)
 {
 	m_tauler[pos.getPosicioX()][pos.getPosicioY()].setColor(color);
@@ -227,6 +204,42 @@ void Chessboard::setNovaPiece(ChessPosition pos, ChessPieceColor color, ChessPie
 }
 
 
+// ---------------------------------------------------------------------------------------------- altres metodes
+void Chessboard::peonsAReines()
+{
+	for (int row = 0; row < 2; row++)
+	{
+		for (int col = 0; col < NUM_COLS; col++)
+		{
+			if (m_tauler[col][(NUM_ROWS - 1) * row].getTipus() == CPT_Pawn)
+				m_tauler[col][(NUM_ROWS - 1) * row].setTipus(CPT_Queen);			
+		}
+	}
+}
+
+bool checkmate() 
+{
+
+	return false;
+}
+
+bool Chessboard::posicioDinsVector(const ChessPosition& pos, VecOfPositions vectorPos)
+{
+	int i = 0;
+	bool trobat = false;
+
+	while (!trobat && i < vectorPos.size())
+	{
+		if (pos == vectorPos.at(i))
+			trobat = true;
+		else
+			i++;
+	}
+
+	return trobat;
+}
+
+// --------------------------------------------------------------------------------- render
 void Chessboard::render() 
 {
 	//GraphicManager::getInstance()->drawSprite(IMAGE_PIECE_BISHOP_WHITE, 0, 0);

@@ -10,6 +10,8 @@ typedef vector<ChessPosition> VecOfPositions;
 class Chessboard
 {
 public:   
+    // Constructor
+    Chessboard() : m_gameOver(false) {}
 
     // Getters i Setters
     Piece getPiece(int x, int y) { return m_tauler[x][y]; }
@@ -31,7 +33,8 @@ public:
     ChessPieceType GetPieceTypeAtPos(ChessPosition pos) const;
     bool getMogudaPiece(const ChessPosition pos);
     void setNovaPiece(ChessPosition pos, ChessPieceColor color, ChessPieceType tipus, bool moguda);
-    bool MovePiece(const ChessPosition& posFrom, const ChessPosition& posTo);
+    bool MovePiece(const ChessPosition& posFrom, const ChessPosition& posTo, bool& gameOver);
+    void peonsAReines();
 
     // analisis
     void analisiDiagonals(const ChessPosition& pos, VecOfPositions& vectorPos);
@@ -42,6 +45,7 @@ public:
 private:
     Piece m_tauler[NUM_COLS][NUM_ROWS];
     ChessPosition m_casellaSeleccionada;
+    bool m_gameOver;
 };
 
 
