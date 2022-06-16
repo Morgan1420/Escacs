@@ -20,11 +20,15 @@ CurrentGame::CurrentGame()
 void CurrentGame::init(GameMode mode, const string& intitialBoardFile, const string& movementsFile)
 {
     // Dibuixem el tauler, eliminem les fitxes a resaltar i asignem el 1r torn a les blanques;
-    GraphicManager::getInstance()->drawSprite(IMAGE_PIECE_PAWN_WHITE, 0, 0);
-    chessBoard.LoadBoardFromFile(intitialBoardFile);
-    casellesResaltar.clear();
-    m_torn = CPC_White;
-    m_gameOver = false;
+    if (mode == GM_NORMAL)
+    {
+        GraphicManager::getInstance()->drawSprite(IMAGE_PIECE_PAWN_WHITE, 0, 0);
+        chessBoard.LoadBoardFromFile(intitialBoardFile);
+        casellesResaltar.clear();
+        m_torn = CPC_White;
+        m_gameOver = false;
+    }
+
 }
 
 bool CurrentGame::updateAndRender(int mousePosX, int mousePosY, bool mouseStatus) 
