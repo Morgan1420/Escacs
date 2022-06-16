@@ -27,13 +27,54 @@ void CurrentGame::init(GameMode mode, const string& intitialBoardFile, const str
     m_gameOver = false;
 }
 
-bool CurrentGame::updateAndRender(int mousePosX, int mousePosY, bool mouseStatus) 
+bool CurrentGame::updateAndRender(int mousePosX, int mousePosY, bool mouseStatus)
 {
-      
+
+    switch (m_decisioMenu)
+    {
+    case 1:
+        jugarPartida(mousePosX, mousePosY, mouseStatus);
+        break;
+
+    default:
+        menu(mousePosX, mousePosY, mouseStatus);
+    }
+
+    return m_gameOver;
+
+}
+// -------------------------------------------------------------------------------------- metodes de joc
+// menu principal
+void CurrentGame::menu(int mousePosX, int mousePosY, bool mouseStatus) {
+
+    // imprimir missatges 
+    int posTextX = CELL_INIT_X;
+
+    std::string msg = "Nova Partida";
+    GraphicManager::getInstance()->drawFont(FONT_RED_30, posTextX, CELL_INIT_Y + (CELL_H * 1), 0.8, msg);
+
+    msg = "Carregea partida";
+    GraphicManager::getInstance()->drawFont(FONT_RED_30, posTextX, CELL_INIT_Y + (CELL_H * 3), 0.8, msg);
+
+    // calcular si es pitja un missatge
+    if (mouseStatus && (CELL_INIT_X < mousePosX) && (mousePosX < CELL_INIT_X + CELL_W * 2) && (CELL_INIT_Y + (CELL_H * 1) < mousePosY) && (mousePosY < CELL_INIT_Y + CELL_H * 2))
+    {
+        m_decisioMenu = 1;
+    }
+    else if (mouseStatus && (CELL_INIT_X < mousePosX) && (mousePosX < CELL_INIT_X + CELL_W * 3) && (CELL_INIT_Y + (CELL_H * 3) < mousePosY) && (mousePosY < CELL_INIT_Y + CELL_H * 4))
+    {
+        m_decisioMenu = 2;
+
+    }
+}
+
+// _---------------------------------------------------------------------------------------------------------- jugar partida
+void CurrentGame::jugarPartida(int mousePosX, int mousePosY, bool mouseStatus)
+{
     // Renderitzat de les fitxes
-    GraphicManager::getInstance()->drawSprite(IMAGE_BOARD, 0, 0);   
+    GraphicManager::getInstance()->drawSprite(IMAGE_BOARD, 0, 0);
     chessBoard.render();
-    for(int i = 0; i < casellesResaltar.size(); i++)
+    for (int i = 0; i < casellesResaltar.size(); i++)
         GraphicManager::getInstance()->drawSprite(IMAGE_VALID_POS, CELL_INIT_X + CELL_W * casellesResaltar.at(i).getPosicioX(), CELL_INIT_Y + CELL_H * casellesResaltar.at(i).getPosicioY());
 
 
@@ -66,39 +107,30 @@ bool CurrentGame::updateAndRender(int mousePosX, int mousePosY, bool mouseStatus
                     {
                         chessBoard.setCasellaSeleccionada(pos);
                         casellesResaltar = chessBoard.GetValidMoves(chessBoard.getCasellaSeleccionada());
-                    }                    
+                    }
                 }
                 else
                 {
                     ChessPosition desti(posX, posY);
                     chessBoard.MovePiece(chessBoard.getCasellaSeleccionada(), desti, m_gameOver);
                     casellesResaltar.clear();
-                    
+
                     if (m_torn == CPC_Black)
                         m_torn = CPC_White;
                     else
                         m_torn = CPC_Black;
-                    
+
                 }
 
                 trobat = true;
-                
+
             }
             posY++;
         }
         posX++;
     }
-    
+
     printTorn();
-
-
-
-   
-
-
-
-    return m_gameOver;
-
 }
 
 // -------------------------------------------------------------------------------------- prints 

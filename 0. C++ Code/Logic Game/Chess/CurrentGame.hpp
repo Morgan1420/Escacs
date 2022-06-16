@@ -24,6 +24,8 @@ public:
     void end();  
 
     // metodes de joc
+    void jugarPartida(int mousePosX, int mousePosY, bool mouseStatus);
+    void menu(int mousePosX, int mousePosY, bool mouseStatus);
 
     // prints
     void printWinner();
@@ -33,6 +35,7 @@ private:
     VecOfPositions casellesResaltar;
     ChessPieceColor m_torn;
     bool m_gameOver;
+    int m_decisioMenu;
 };
 
 #endif /* CurrentGame_hpp */
