@@ -2,6 +2,177 @@
 #include "CurrentGame.hpp"
 
 
+
+VecOfPositions Chessboard::GetValidMoves2(const ChessPosition& pos)
+{
+	/*
+	REI:			REINA:			TORRE:			CABALL			ALFIL:		 	PEO
+	- - - - -		X - X - X		- - X - -		- X - X -		X - - - X		- - - - -
+	- X X X -		- X X X -		- - X - -		X - - - X		- X - X -		- - X - -
+	- X R X -		X X R X X		X X T X X		- - C - -		- - A - -		- X X X -
+	- X X X -		- X X X -		- - X - -		X - - - X		- X - X -		- - P - -
+	- - - - -		X - X - X		- - X - -		- X - X -		X - - - X		- - - - -
+	*/
+
+	VecOfPositions vectorPos;
+	ChessPosition posAuxiliar;
+	//Si el rey esta atacat (m_reiAtacat = true) fer que les altres peces es puguin moure si i nomes si salvin al rey
+	//Matar peça atacant, posar-se al mitg entre  rei i peça atacant
+
+
+	switch (m_tauler[pos.getPosicioX()][pos.getPosicioY()].getTipus())
+	{
+	case CPT_King:
+		// analitzem cada posició que hi ha al voltant del rei i ens quedem amb les vàlides
+		for (int i = -1; i <= 1; i++)
+		{
+			posAuxiliar.setPosicioX(pos.getPosicioX() + i);
+
+			for (int j = -1; j <= 1; j++)
+			{
+				posAuxiliar.setPosicioY(pos.getPosicioY() + j);
+
+				if (posicioValida(posAuxiliar, pos))
+					vectorPos.push_back(posAuxiliar);
+			}
+		}
+
+		if (check(vectorPos, pos).size() != 0)
+		{
+			vector<ChessPosition>::iterator aux;
+			int i = 0;
+
+			//si hi ha una posicio on es pugui moure el rei (estant atacat) on, si es mou, el poden matar, treure posicio valida aquella casella
+			for (aux = vectorPos.begin(); aux != vectorPos.end(); aux++)
+			{
+
+				//si una fitxa pot atacar a una posicio on pot anar el rei, llavors el rei no pot anar alla
+				if (check(vectorPos, vectorPos[i]).size() != 0)
+				{
+					vectorPos.erase(aux);
+				}
+
+				i++;
+			}
+		}
+		//else if(casiCheck())     si no estan atacant al rei directament pero si moc aquesta peça el poden atacar 
+
+		break;
+
+	case CPT_Queen: //amb diagonal NE em refereixo a la diagonal de adalt a la dreta ns  si m'entens rbro v 
+		analisiDiagonals(pos, vectorPos);
+		analisiHoritzontals(pos, vectorPos);
+		analisiVerticals(pos, vectorPos);
+		
+
+		break;
+
+	case CPT_Rook:
+		analisiHoritzontals(pos, vectorPos);
+		analisiVerticals(pos, vectorPos);
+		
+
+		break;
+
+	case CPT_Knight: // ----------------------------------------------- CAVALL
+		analisiCavall(pos, vectorPos);
+		
+
+		break;
+
+	case CPT_Bishop:
+
+		analisiDiagonals(pos, vectorPos);
+		
+
+		break;
+
+
+	case CPT_Pawn: // -------------------------------------------------- PEO
+		analisiPeo(pos, vectorPos);
+		
+
+		break;
+	}
+	return vectorPos;
+}
+
+void Chessboard::salvarARey(VecOfPositions& vecPos, ChessPieceColor torn)
+{
+	VecOfPositions atacant = check(vectorPos, buscarRei(getTorn(torn)));
+
+	//elimina les posicions que no salven al rey si el rey esta atacat (mata a la fitxa)
+
+	if (atacant.size() != 0)
+	{
+		vector<VecOfPositions>::iterator at;
+		vector<VecOfPositions>::iterator vec;
+		int diferents = 0;
+
+		for (vec = vecPos.begin(); vec != vecPos.end(); vec++)
+		{
+			diferents = 0;
+			for (at = atacant.begin(); at != atacant.end(); at++)
+			{
+				if (vec != at)
+				{
+					diferents++;
+				}
+				else
+					diferents = 0;
+			}
+
+			if (diferents == atacant.size())
+				vecPos.erase(vec);
+
+		}
+
+		//ponerse en el medio
+		//Harry Styles
+
+
+		/*
+			Si puedo meterme en el camino de una pieza atacante me meto (ns como reaccionaria con el caballo)
+		*/
+
+		for (vec = vecPos.begin(); vec != vecPos.end(); vec++)
+		{
+			for (at = atacant.begin(); at != atacant.end(); at++)
+			{
+				VecOfPositions posAux = GetValidMoves2(at);
+				vector<ChessPosition>::iterator aux;
+
+				for (aux=posAux.begin(); aux!=posAux.end(); aux++)
+				{
+					if(aux!=vec)
+						vecPos.erase(vec);
+
+				}
+
+			}
+
+		}
+
+	}
+
+}
+
+
+/*
+	Que hace esto te preguntaras, yo te lo explico.
+	Hi ha fitxes que si les mous, deixes al rei exposat, llavors el que intenta fer aquesta funcio es retornar aquelles fitxes que salven al rey
+	Despres haurem de fer que aquestes fitxes no es puguin moure
+*/
+VecOfPositions Chessboard::casiCheck(ChessPosition posicionRei, ChessPieceColor torn)
+{
+	VecOfPositions salvadoras;
+
+
+
+	return salvadoras;
+}
+
+
 VecOfPositions Chessboard::GetValidMoves(const ChessPosition& pos, ChessPieceColor torn)
 {
 	/*
@@ -62,34 +233,35 @@ VecOfPositions Chessboard::GetValidMoves(const ChessPosition& pos, ChessPieceCol
 		analisiDiagonals(pos, vectorPos);
 		analisiHoritzontals(pos, vectorPos);
 		analisiVerticals(pos, vectorPos);
-
-		if (check(vectorPos, buscarRei(getTorn(torn))).size() != 0)
-		{
-
-		}
+		salvarARey(vectorPos, torn);
 
 		break;
 
 	case CPT_Rook:
 		analisiHoritzontals(pos, vectorPos);
 		analisiVerticals(pos, vectorPos);
+		salvarARey(vectorPos, torn);
 
 		break;
 
 	case CPT_Knight: // ----------------------------------------------- CAVALL
 		analisiCavall(pos, vectorPos);
+		salvarARey(vectorPos, torn);
 
 		break;
 
 	case CPT_Bishop:
 
 		analisiDiagonals(pos, vectorPos);
+		salvarARey(vectorPos, torn);
 
 		break;
 
 
 	case CPT_Pawn: // -------------------------------------------------- PEO
 		analisiPeo(pos, vectorPos);
+		salvarARey(vectorPos, torn);
+
 		break;
 	}
 	return vectorPos;

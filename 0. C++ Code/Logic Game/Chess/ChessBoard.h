@@ -22,6 +22,7 @@ public:
     // Metodes de la clase
     void LoadBoardFromFile(const string& nomFitxer); // Cal copiar i modificar el metode loadFromFile de Source.cpp
     VecOfPositions GetValidMoves(const ChessPosition& pos, ChessPieceColor torn);
+    VecOfPositions GetValidMoves2(const ChessPosition& pos);
     string taulaToString() const;
 
     // Metodes auxiliars
@@ -36,11 +37,15 @@ public:
     void setNovaPiece(ChessPosition pos, ChessPieceColor color, ChessPieceType tipus, bool moguda);
     bool MovePiece(const ChessPosition& posFrom, const ChessPosition& posTo, bool& gameOver, ChessPieceColor torn); //cambio
     void peonsAReines();
+
     void guardaPosicioAFitxer(const ChessPosition& posFrom, const ChessPosition& posTo);
     void reproduccioPosicions();
+
     bool checkAux(ChessPosition posicion, ChessPosition posicionRei);
     VecOfPositions check(VecOfPositions& vec, ChessPosition posicionRei);
-    ChessPosition buscarRei(ChessPieceColor color); //cal fer
+    ChessPosition buscarRei(ChessPieceColor color); 
+    VecOfPositions casiCheck(ChessPosition posicionRei, ChessPieceColor torn);
+
 
     // analisis
     void analisiDiagonals(const ChessPosition& pos, VecOfPositions& vectorPos);
@@ -48,6 +53,7 @@ public:
     void analisiHoritzontals(const ChessPosition& pos, VecOfPositions& vectorPos);
     void analisiPeo(const ChessPosition& pos, VecOfPositions& vectorPos);
     void analisiCavall(const ChessPosition& pos, VecOfPositions& vectorPos);
+    void salvarARey(VecOfPositions& vecPos, ChessPieceColor torn);
 
     ChessPieceColor getTorn(ChessPieceColor color) { return color; }
     

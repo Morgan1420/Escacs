@@ -237,6 +237,8 @@ bool Chessboard::getMogudaPiece(const ChessPosition pos)
 	return moguda;
 }
 
+
+
 // --------------------------------------------------------------------------------------------- set Nova piece
 void Chessboard::setNovaPiece(ChessPosition pos, ChessPieceColor color, ChessPieceType tipus, bool moguda)
 {
