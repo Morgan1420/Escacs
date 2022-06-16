@@ -63,9 +63,18 @@ VecOfPositions Chessboard::GetValidMoves(const ChessPosition& pos, ChessPieceCol
 		analisiHoritzontals(pos, vectorPos);
 		analisiVerticals(pos, vectorPos);
 
-		if (check(vectorPos, buscarRei(getTorn(torn))).size() != 0)
-		{
+		VecOfPositions atacants = check(vectorPos, buscarRei(getTorn(torn)));
+		vector<ChessPosition>::iterator aux;
 
+		if (atacants.size() != 0)
+		{
+			for (aux=atacants.begin(); aux != atacants.end(); aux++)
+			{
+				for (int i = 0; i < vectorPos.size(); i++)
+				{
+
+				}
+			}
 		}
 
 		break;
