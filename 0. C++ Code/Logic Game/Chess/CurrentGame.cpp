@@ -135,7 +135,4 @@ void CurrentGame::end()
 
 }
 
-ChessPieceColor getTorn() 
-{
-    
-}
+

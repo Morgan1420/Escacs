@@ -138,7 +138,7 @@ void Chessboard::salvarARey(VecOfPositions& vecPos, ChessPieceColor torn)
 		{
 			for (at = atacant.begin(); at != atacant.end(); at++)
 			{
-				VecOfPositions posAux = GetValidMoves2(at);
+				VecOfPositions posAux = GetValidMoves2(*at);
 				vector<ChessPosition>::iterator aux;
 
 				for (aux=posAux.begin(); aux!=posAux.end(); aux++)
@@ -211,6 +211,17 @@ void Chessboard::casiCheck(ChessPosition posicionRei, ChessPieceColor torn, Ches
 
 	salvadoras = aux;
 
+	int contador = 0;
+
+	if (salvadoras.size() != 0)
+	{
+		vector<ChessPosition>::iterator aux = salvadoras.begin();
+		while (aux != salvadoras.end() && !(*aux == pos))
+			contador++;
+	}
+	if (contador != salvadoras.size())
+		vectorPos.clear();
+
 	//Vertical S
 	i = 1;
 	fiLinea = false;
@@ -237,12 +248,12 @@ void Chessboard::casiCheck(ChessPosition posicionRei, ChessPieceColor torn, Ches
 		aux.clear();
 
 	salvadoras = aux;
-	int contador = 0;
+	contador = 0;
 
 	if (salvadoras.size() != 0)
 	{
 		vector<ChessPosition>::iterator aux = salvadoras.begin();
-		while (aux != salvadoras.end() && aux != pos)
+		while (aux != salvadoras.end() && !(*aux == pos))
 			contador++;
 	}
 	if (contador != salvadoras.size())
@@ -278,12 +289,12 @@ void Chessboard::casiCheck(ChessPosition posicionRei, ChessPieceColor torn, Ches
 		aux.clear();
 
 	salvadoras = aux;
-	int contador = 0;
+	contador = 0;
 
 	if (salvadoras.size() != 0)
 	{
 		vector<ChessPosition>::iterator aux = salvadoras.begin();
-		while (aux != salvadoras.end() && aux != pos)
+		while (aux != salvadoras.end() && !(*aux == pos))
 			contador++;
 	}
 	if (contador != salvadoras.size())
@@ -315,12 +326,12 @@ void Chessboard::casiCheck(ChessPosition posicionRei, ChessPieceColor torn, Ches
 		aux.clear();
 
 	salvadoras = aux;
-	int contador = 0;
+	contador = 0;
 
 	if (salvadoras.size() != 0)
 	{
 		vector<ChessPosition>::iterator aux = salvadoras.begin();
-		while (aux != salvadoras.end() && aux != pos)
+		while (aux != salvadoras.end() && !(*aux == pos))
 			contador++;
 	}
 	if (contador != salvadoras.size())
@@ -359,12 +370,12 @@ void Chessboard::casiCheck(ChessPosition posicionRei, ChessPieceColor torn, Ches
 		aux.clear();
 
 	salvadoras = aux;
-	int contador = 0;
+	contador = 0;
 
 	if (salvadoras.size() != 0)
 	{
 		vector<ChessPosition>::iterator aux = salvadoras.begin();
-		while (aux != salvadoras.end() && aux != pos)
+		while (aux != salvadoras.end() && !(*aux == pos))
 			contador++;
 	}
 	if (contador != salvadoras.size())
@@ -399,12 +410,12 @@ void Chessboard::casiCheck(ChessPosition posicionRei, ChessPieceColor torn, Ches
 		aux.clear();
 
 	salvadoras = aux;
-	int contador = 0;
+	contador = 0;
 
 	if (salvadoras.size() != 0)
 	{
 		vector<ChessPosition>::iterator aux = salvadoras.begin();
-		while (aux != salvadoras.end() && aux != pos)
+		while (aux != salvadoras.end() && !(*aux == pos))
 			contador++;
 	}
 	if (contador != salvadoras.size())
@@ -438,12 +449,12 @@ void Chessboard::casiCheck(ChessPosition posicionRei, ChessPieceColor torn, Ches
 		aux.clear();
 
 	salvadoras = aux;
-	int contador = 0;
+	contador = 0;
 
 	if (salvadoras.size() != 0)
 	{
 		vector<ChessPosition>::iterator aux = salvadoras.begin();
-		while (aux != salvadoras.end() && aux != pos)
+		while (aux != salvadoras.end() && !(*aux == pos))
 			contador++;
 	}
 	if (contador != salvadoras.size())
@@ -477,12 +488,12 @@ void Chessboard::casiCheck(ChessPosition posicionRei, ChessPieceColor torn, Ches
 		aux.clear();
 
 	salvadoras = aux;
-	int contador = 0;
+	contador = 0;
 
 	if (salvadoras.size() != 0)
 	{
 		vector<ChessPosition>::iterator aux = salvadoras.begin();
-		while (aux != salvadoras.end() && aux != pos)
+		while (aux != salvadoras.end() && !(*aux == pos))
 			contador++;
 	}
 	if (contador != salvadoras.size())
