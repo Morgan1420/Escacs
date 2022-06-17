@@ -44,7 +44,8 @@ public:
     bool checkAux(ChessPosition posicion, ChessPosition posicionRei);
     VecOfPositions check(VecOfPositions& vec, ChessPosition posicionRei);
     ChessPosition buscarRei(ChessPieceColor color); 
-    VecOfPositions casiCheck(ChessPosition posicionRei, ChessPieceColor torn);
+    void casiCheck(ChessPosition posicionRei, ChessPieceColor torn, ChessPosition pos, VecOfPositions& vectorPos);
+    bool posicioValida2(ChessPosition posAuxiliar, ChessPosition pos, VecOfPositions& salvadoras, int &fitxes);
 
 
     // analisis

@@ -162,24 +162,172 @@ void Chessboard::salvarARey(VecOfPositions& vecPos, ChessPieceColor torn)
 	Hi ha fitxes que si les mous, deixes al rei exposat, llavors el que intenta fer aquesta funcio es retornar aquelles fitxes que salven al rey
 	Despres haurem de fer que aquestes fitxes no es puguin moure
 */
-VecOfPositions Chessboard::casiCheck(ChessPosition posicionRei, ChessPieceColor torn)
+void Chessboard::casiCheck(ChessPosition posicionRei, ChessPieceColor torn, ChessPosition pos, VecOfPositions &vectorPos)
 {
-	VecOfPositions salvadoras;
-
+	VecOfPositions salvadoras , aux;
+	VecOfPositions atacante;
+	/*
 	Piece taulerAux;
-
+	
 	for (int i = 0; i < NUM_ROWS; i++)
 	{
 		for (int j = 0; j < NUM_COLS; j++)
 		{
 			taulerAux[i][j] = m_tauler[i][j];
 		}
+	} */
+
+	ChessPosition posAuxiliar;
+	posAuxiliar.setPosicioX(posicionRei.getPosicioX());
+
+	ChessPieceColor colorOposat = CPC_Black;
+	if (GetPieceColorAtPos(posicionRei) == CPC_Black)
+		colorOposat = CPC_White;
+
+	//Vertical N
+	int i = 1;
+	bool fiLinea = false;
+	int fitxes = 0;
+	posAuxiliar.setPosicioY(posicionRei.getPosicioY() + i);
+
+	while (posicioValida2(posAuxiliar, posicionRei, aux, fitxes) && !fiLinea)
+	{
+		if (GetPieceColorAtPos(posAuxiliar) == colorOposat)
+			fiLinea = true;
+
+		i++;
+		posAuxiliar.setPosicioY(posicionRei.getPosicioY() + i);
 	}
 
+	if (fiLinea)
+	{
+		posAuxiliar.setPosicioY(posicionRei.getPosicioY() - 1);
+
+		if ((GetPieceTypeAtPos(posAuxiliar) != CPT_Queen || GetPieceTypeAtPos(posAuxiliar) != CPT_Rook)&& fitxes!=1 )
+			aux.clear();
+	}
+	else
+		aux.clear();
+
+	salvadoras = aux;
+
+	//Vertical S
+	i = 1;
+	fiLinea = false;
+	fitxes = 0;
+	posAuxiliar.setPosicioY(posicionRei.getPosicioY() - i);
+
+	while (posicioValida2(posAuxiliar, posicionRei, aux, fitxes) && !fiLinea)
+	{
+		if (GetPieceColorAtPos(posAuxiliar) == colorOposat)
+			fiLinea = true;
+
+		i++;
+		posAuxiliar.setPosicioY(posicionRei.getPosicioY() - i);
+	}
+
+	if (fiLinea)
+	{
+		posAuxiliar.setPosicioY(posicionRei.getPosicioY() + 1);
+
+		if ((GetPieceTypeAtPos(posAuxiliar) != CPT_Queen || GetPieceTypeAtPos(posAuxiliar) != CPT_Rook) && fitxes !=1)
+			aux.clear();
+	}
+	else
+		aux.clear();
+
+	salvadoras = aux;
+	int contador = 0;
+
+	if (salvadoras.size() != 0)
+	{
+		vector<ChessPosition>::iterator aux = salvadoras.begin();
+		while (aux != salvadoras.end() && aux != pos)
+			contador++;
+	}
+	if (contador != salvadoras.size())
+		vectorPos.clear();
 
 
+	//---------Horitzontals------------------------------------------------------------------------------------------------------------------------------------------------
+	posAuxiliar.setPosicioY(pos.getPosicioY());
 
-	return salvadoras;
+	// Horitzontal E
+	i = 1;
+	fiLinea = false;
+	fitxes = 0;
+	posAuxiliar.setPosicioX(pos.getPosicioX() + i);
+
+	while (posicioValida2(posAuxiliar, posicionRei, aux, fitxes) && !fiLinea)
+	{
+		if (GetPieceColorAtPos(posAuxiliar) == colorOposat)
+			fiLinea = true;
+
+		i++;
+		posAuxiliar.setPosicioX(pos.getPosicioX() + i);
+	}
+
+	if (fiLinea)
+	{
+		posAuxiliar.setPosicioX(posicionRei.getPosicioX() - 1);
+
+		if ((GetPieceTypeAtPos(posAuxiliar) != CPT_Queen || GetPieceTypeAtPos(posAuxiliar) != CPT_Rook) && fitxes != 1)
+			aux.clear();
+	}
+	else
+		aux.clear();
+
+	salvadoras = aux;
+	int contador = 0;
+
+	if (salvadoras.size() != 0)
+	{
+		vector<ChessPosition>::iterator aux = salvadoras.begin();
+		while (aux != salvadoras.end() && aux != pos)
+			contador++;
+	}
+	if (contador != salvadoras.size())
+		vectorPos.clear();
+
+	// Horitzontal O
+	i = 1;
+	fiLinea = false;
+	fitxes = 0;
+	posAuxiliar.setPosicioX(pos.getPosicioX() - i);
+	
+	while (posicioValida2(posAuxiliar, posicionRei, aux, fitxes) && !fiLinea)
+	{
+		if (GetPieceColorAtPos(posAuxiliar) == colorOposat)
+			fiLinea = true;
+
+		i++;
+		posAuxiliar.setPosicioX(pos.getPosicioX() - i);
+	}
+
+	if (fiLinea)
+	{
+		posAuxiliar.setPosicioX(posicionRei.getPosicioX() + 1);
+
+		if ((GetPieceTypeAtPos(posAuxiliar) != CPT_Queen || GetPieceTypeAtPos(posAuxiliar) != CPT_Rook) && fitxes != 1)
+			aux.clear();
+	}
+	else
+		aux.clear();
+
+	salvadoras = aux;
+	int contador = 0;
+
+	if (salvadoras.size() != 0)
+	{
+		vector<ChessPosition>::iterator aux = salvadoras.begin();
+		while (aux != salvadoras.end() && aux != pos)
+			contador++;
+	}
+	if (contador != salvadoras.size())
+		vectorPos.clear();
+
+	//---------------Diagonales-------------------------------------------------------------------------------------------------------------------------------------
+	
 }
 
 
@@ -194,8 +342,9 @@ VecOfPositions Chessboard::GetValidMoves(const ChessPosition& pos, ChessPieceCol
 	- - - - -		X - X - X		- - X - -		- X - X -		X - - - X		- - - - -
 	*/
 
-	VecOfPositions vectorPos;
+	VecOfPositions vectorPos, casicheck;
 	ChessPosition posAuxiliar;
+	int contador = 0;
 	//Si el rey esta atacat (m_reiAtacat = true) fer que les altres peces es puguin moure si i nomes si salvin al rey
 	//Matar peça atacant, posar-se al mitg entre  rei i peça atacant
 
@@ -244,6 +393,8 @@ VecOfPositions Chessboard::GetValidMoves(const ChessPosition& pos, ChessPieceCol
 		analisiHoritzontals(pos, vectorPos);
 		analisiVerticals(pos, vectorPos);
 		salvarARey(vectorPos, torn);
+		casiCheck(buscarRei(torn), torn, pos, vectorPos);
+
 
 		break;
 
@@ -251,19 +402,21 @@ VecOfPositions Chessboard::GetValidMoves(const ChessPosition& pos, ChessPieceCol
 		analisiHoritzontals(pos, vectorPos);
 		analisiVerticals(pos, vectorPos);
 		salvarARey(vectorPos, torn);
+		casiCheck(buscarRei(torn), torn, pos, vectorPos);
 
 		break;
 
 	case CPT_Knight: // ----------------------------------------------- CAVALL
 		analisiCavall(pos, vectorPos);
 		salvarARey(vectorPos, torn);
+		casiCheck(buscarRei(torn), torn, pos, vectorPos);
 
 		break;
 
 	case CPT_Bishop:
-
 		analisiDiagonals(pos, vectorPos);
 		salvarARey(vectorPos, torn);
+		casiCheck(buscarRei(torn), torn, pos, vectorPos);
 
 		break;
 
@@ -271,6 +424,7 @@ VecOfPositions Chessboard::GetValidMoves(const ChessPosition& pos, ChessPieceCol
 	case CPT_Pawn: // -------------------------------------------------- PEO
 		analisiPeo(pos, vectorPos);
 		salvarARey(vectorPos, torn);
+		casiCheck(buscarRei(torn), torn, pos, vectorPos);
 
 		break;
 	}
@@ -539,6 +693,25 @@ bool Chessboard::posicioValida(ChessPosition posAuxiliar, ChessPosition pos)
 		esValida = false;
 	else if (GetPieceTypeAtPos(posAuxiliar) != CPT_EMPTY && GetPieceColorAtPos(posAuxiliar) == GetPieceColorAtPos(pos))
 		esValida = false;
+
+	return esValida;
+
+}
+
+
+//la variable fitxes existeix ja que a l'hora d'analitzar, nomes vull analitzar la primera fitxa
+bool Chessboard::posicioValida2(ChessPosition posAuxiliar, ChessPosition pos, VecOfPositions &salvadoras, int &fitxes)
+{
+	bool esValida = true;
+
+	if (posAuxiliar.getPosicioX() > NUM_COLS - 1 || posAuxiliar.getPosicioX() < 0 || posAuxiliar.getPosicioY() > NUM_ROWS - 1 || posAuxiliar.getPosicioY() < 0)
+		esValida = false;
+	else if (/*GetPieceTypeAtPos(posAuxiliar) != CPT_EMPTY && */ GetPieceColorAtPos(posAuxiliar) == GetPieceColorAtPos(pos))
+	{
+		salvadoras.push_back(pos); //posibles salvadoras
+		fitxes++;
+	}
+		
 
 	return esValida;
 
