@@ -22,7 +22,7 @@ void CurrentGame::init(GameMode mode, const string& intitialBoardFile, const str
     m_partidaGuardada = "data/Games/partida_guardada.txt";
     casellesResaltar.clear();
     m_torn = CPC_White;
-    m_gameOver = false;
+    
     m_decisioMenu = 0;
 }
 
@@ -38,8 +38,8 @@ bool CurrentGame::updateAndRender(int mousePosX, int mousePosY, bool mouseStatus
         jugarPartida(mousePosX, mousePosY, mouseStatus);
         break;
     case 3:
-        //
-        //break;
+        reproduirPartida();
+        break;
     default:
         menu(mousePosX, mousePosY, mouseStatus);
     }
@@ -48,8 +48,8 @@ bool CurrentGame::updateAndRender(int mousePosX, int mousePosY, bool mouseStatus
 
 }
 
-// -------------------------------------------------------------------------------------- metodes de joc
-// menu principal
+// --------------------------------------------------------------------------------------------------------------------------- metodes de joc
+// ----------------------------------------------------------------------------------------------------------- menu principal
 void CurrentGame::menu(int mousePosX, int mousePosY, bool mouseStatus) {
 
     // imprimir missatges 
@@ -81,8 +81,11 @@ void CurrentGame::menu(int mousePosX, int mousePosY, bool mouseStatus) {
         m_decisioMenu = 2;
         
         ifstream file(m_partidaGuardada);
-        if(file.peek() == '0' || file.peek() == '1')         
+        if (file.peek() == '0' || file.peek() == '1')
+        {
             chessBoard.LoadBoardFromFile(m_partidaGuardada);
+
+        }
         else
             chessBoard.LoadBoardFromFile(m_initialBoardFile);
 
@@ -92,9 +95,16 @@ void CurrentGame::menu(int mousePosX, int mousePosY, bool mouseStatus) {
     {
         // reproduir partida
         m_decisioMenu = 3;
-        chessBoard.LoadBoardFromFile(m_movementsFile);
+        chessBoard.LoadBoardFromFile(m_initialBoardFile);
 
-
+        ifstream file(m_movementsFile);
+        while (!file.eof())
+        {
+            string str;
+            getline(file, str);
+            m_moviments.push(str);
+        }
+        file.close();
     }
 }
 
@@ -167,10 +177,42 @@ void CurrentGame::jugarPartida(int mousePosX, int mousePosY, bool mouseStatus)
     printTorn();
 }
 
-// -------------------------------------------------------------------------------------- reproduir partida
+// ----------------------------------------------------------------------------------------------------------- reproduir partida
 void CurrentGame::reproduirPartida()
 {
-    Keyboard_GetKeyTrg(KEYBOARD_RIGHT);
+    // Renderitzat de les fitxes
+    GraphicManager::getInstance()->drawSprite(IMAGE_BOARD, 0, 0);
+    chessBoard.render();
+
+    if (Keyboard_GetKeyTrg(KEYBOARD_SPACE) && m_moviments.size() != 0)
+    {
+        string nextMovement = m_moviments.front();
+
+        // asignem les posicions de partida i arribada
+        string x, y, pos;
+        
+        // posfrom
+        x = nextMovement.at(0);
+        y = nextMovement.at(1);
+        pos = x + y;
+        ChessPosition posFrom(pos);
+        
+        // posTo
+        x = nextMovement.at(2);
+        y = nextMovement.at(3);
+        pos = x + y;
+        ChessPosition posTo(pos);
+
+    
+        // movem la peça que toca
+        chessBoard.MovePiece(posFrom, posTo, m_gameOver);
+
+        // eliminem el moviment de la queue
+        m_moviments.pop();
+    }
+
+
+    
 }
 
 
