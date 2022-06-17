@@ -328,6 +328,167 @@ void Chessboard::casiCheck(ChessPosition posicionRei, ChessPieceColor torn, Ches
 
 	//---------------Diagonales-------------------------------------------------------------------------------------------------------------------------------------
 	
+
+	// Diagonal NE
+	i = 1;
+	fiLinea = false;
+	fitxes = 0;
+	posAuxiliar.setPosicioX(pos.getPosicioX() + i);
+	posAuxiliar.setPosicioY(pos.getPosicioY() - i);
+
+	while (posicioValida2(posAuxiliar, posicionRei, aux, fitxes) && !fiLinea)
+	{
+		if (GetPieceColorAtPos(posAuxiliar) == colorOposat)
+			fiLinea = true;
+
+		
+		i++;
+		posAuxiliar.setPosicioX(pos.getPosicioX() + i);
+		posAuxiliar.setPosicioY(pos.getPosicioY() - i);
+	}
+
+	if (fiLinea)
+	{
+		posAuxiliar.setPosicioX(posicionRei.getPosicioX() - 1);
+		posAuxiliar.setPosicioY(posicionRei.getPosicioY() + 1);
+
+		if ((GetPieceTypeAtPos(posAuxiliar) != CPT_Queen || GetPieceTypeAtPos(posAuxiliar) != CPT_Rook) && fitxes != 1)
+			aux.clear();
+	}
+	else
+		aux.clear();
+
+	salvadoras = aux;
+	int contador = 0;
+
+	if (salvadoras.size() != 0)
+	{
+		vector<ChessPosition>::iterator aux = salvadoras.begin();
+		while (aux != salvadoras.end() && aux != pos)
+			contador++;
+	}
+	if (contador != salvadoras.size())
+		vectorPos.clear();
+
+
+	// Diagonal NO
+	i = 1;
+	fiLinea = false;
+	posAuxiliar.setPosicioX(pos.getPosicioX() - i);
+	posAuxiliar.setPosicioY(pos.getPosicioY() - i);
+
+	while (posicioValida(posAuxiliar, pos) && !fiLinea)
+	{
+		if (GetPieceColorAtPos(posAuxiliar) == colorOposat)
+			fiLinea = true;
+
+		i++;
+		posAuxiliar.setPosicioX(pos.getPosicioX() - i);
+		posAuxiliar.setPosicioY(pos.getPosicioY() - i);
+	}
+
+	if (fiLinea)
+	{
+		posAuxiliar.setPosicioX(posicionRei.getPosicioX() + 1);
+		posAuxiliar.setPosicioY(posicionRei.getPosicioY() + 1);
+
+		if ((GetPieceTypeAtPos(posAuxiliar) != CPT_Queen || GetPieceTypeAtPos(posAuxiliar) != CPT_Rook) && fitxes != 1)
+			aux.clear();
+	}
+	else
+		aux.clear();
+
+	salvadoras = aux;
+	int contador = 0;
+
+	if (salvadoras.size() != 0)
+	{
+		vector<ChessPosition>::iterator aux = salvadoras.begin();
+		while (aux != salvadoras.end() && aux != pos)
+			contador++;
+	}
+	if (contador != salvadoras.size())
+		vectorPos.clear();
+
+	// Diagonal SO
+	i = 1;
+	fiLinea = false;
+	posAuxiliar.setPosicioX(pos.getPosicioX() - i);
+	posAuxiliar.setPosicioY(pos.getPosicioY() + i);
+
+	while (posicioValida(posAuxiliar, pos) && !fiLinea)
+	{
+		if (GetPieceColorAtPos(posAuxiliar) == colorOposat)
+			fiLinea = true;
+
+		i++;
+		posAuxiliar.setPosicioX(pos.getPosicioX() - i);
+		posAuxiliar.setPosicioY(pos.getPosicioY() + i);
+	}
+
+	if (fiLinea)
+	{
+		posAuxiliar.setPosicioX(posicionRei.getPosicioX() + 1);
+		posAuxiliar.setPosicioY(posicionRei.getPosicioY() - 1);
+
+		if ((GetPieceTypeAtPos(posAuxiliar) != CPT_Queen || GetPieceTypeAtPos(posAuxiliar) != CPT_Rook) && fitxes != 1)
+			aux.clear();
+	}
+	else
+		aux.clear();
+
+	salvadoras = aux;
+	int contador = 0;
+
+	if (salvadoras.size() != 0)
+	{
+		vector<ChessPosition>::iterator aux = salvadoras.begin();
+		while (aux != salvadoras.end() && aux != pos)
+			contador++;
+	}
+	if (contador != salvadoras.size())
+		vectorPos.clear();
+
+	// Diagonal SE
+	i = 1;
+	fiLinea = false;
+	posAuxiliar.setPosicioX(pos.getPosicioX() + i);
+	posAuxiliar.setPosicioY(pos.getPosicioY() + i);
+
+	while (posicioValida(posAuxiliar, pos) && !fiLinea)
+	{
+		if (GetPieceColorAtPos(posAuxiliar) == colorOposat)
+			fiLinea = true;
+
+		i++;
+		posAuxiliar.setPosicioX(pos.getPosicioX() + i);
+		posAuxiliar.setPosicioY(pos.getPosicioY() + i);
+	}
+
+	if (fiLinea)
+	{
+		posAuxiliar.setPosicioX(posicionRei.getPosicioX() - 1);
+		posAuxiliar.setPosicioY(posicionRei.getPosicioY() - 1);
+
+		if ((GetPieceTypeAtPos(posAuxiliar) != CPT_Queen || GetPieceTypeAtPos(posAuxiliar) != CPT_Rook) && fitxes != 1)
+			aux.clear();
+	}
+	else
+		aux.clear();
+
+	salvadoras = aux;
+	int contador = 0;
+
+	if (salvadoras.size() != 0)
+	{
+		vector<ChessPosition>::iterator aux = salvadoras.begin();
+		while (aux != salvadoras.end() && aux != pos)
+			contador++;
+	}
+	if (contador != salvadoras.size())
+		vectorPos.clear();
+
+
 }
 
 
