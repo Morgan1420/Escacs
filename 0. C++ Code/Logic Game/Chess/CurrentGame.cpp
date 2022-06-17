@@ -23,6 +23,7 @@ void CurrentGame::init(GameMode mode, const string& intitialBoardFile, const str
     casellesResaltar.clear();
     m_torn = CPC_White;
     m_gameOver = false;
+    m_decisioMenu = 0;
 }
 
 bool CurrentGame::updateAndRender(int mousePosX, int mousePosY, bool mouseStatus)
@@ -92,6 +93,8 @@ void CurrentGame::menu(int mousePosX, int mousePosY, bool mouseStatus) {
         // reproduir partida
         m_decisioMenu = 3;
         chessBoard.LoadBoardFromFile(m_movementsFile);
+
+
     }
 }
 
@@ -148,6 +151,8 @@ void CurrentGame::jugarPartida(int mousePosX, int mousePosY, bool mouseStatus)
                         m_torn = CPC_Black;
 
                     chessBoard.SaveBoardToFile(m_partidaGuardada);
+                    chessBoard.movementsToFile(m_movementsFile);
+                    
 
                 }
 
@@ -161,6 +166,13 @@ void CurrentGame::jugarPartida(int mousePosX, int mousePosY, bool mouseStatus)
 
     printTorn();
 }
+
+// -------------------------------------------------------------------------------------- reproduir partida
+void CurrentGame::reproduirPartida()
+{
+    Keyboard_GetKeyTrg(KEYBOARD_RIGHT);
+}
+
 
 // -------------------------------------------------------------------------------------- prints 
 void CurrentGame::printWinner()

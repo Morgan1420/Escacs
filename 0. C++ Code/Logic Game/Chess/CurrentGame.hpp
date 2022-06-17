@@ -26,6 +26,7 @@ public:
     // metodes de joc
     void jugarPartida(int mousePosX, int mousePosY, bool mouseStatus);
     void menu(int mousePosX, int mousePosY, bool mouseStatus);
+    void reproduirPartida();
 
     // prints
     void printWinner();

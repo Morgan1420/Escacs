@@ -84,14 +84,15 @@ bool ChessPosition::operator==(ChessPosition pos) const
 string ChessPosition::toString() const 
 {
 	string res ="__";
-	char x = m_posX + 96;
-	if(m_posX < 8 && m_posX >= 1)
-		res[0] = x;
+	char x = '_';
+	if(m_posX < 8 && m_posX >= 0)
+		x = m_posX + 97;
 
-	char y = m_posY + 48;
-	if(m_posY < 8 && m_posY >= 1)
-		res[1] = y;
+	string y = "_";
+	if(m_posY < 8 && m_posY >= 0)
+		y = to_string(8 - m_posY);
 
+	res = x + y;
 	return res;
 
 }

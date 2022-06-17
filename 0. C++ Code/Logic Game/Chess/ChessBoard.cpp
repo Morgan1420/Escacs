@@ -127,7 +127,7 @@ void Chessboard::LoadBoardFromFile(const string& nomFitxer)
 	fitxer.close();
 }
 
-
+// ---------------------------------------------------------------------------------------- guardar a Arxiu
 void Chessboard::SaveBoardToFile(const string& nomFitxer) //0. Ta1
 {
 	ofstream fitxer(nomFitxer);
@@ -182,13 +182,54 @@ void Chessboard::SaveBoardToFile(const string& nomFitxer) //0. Ta1
 	fitxer.close();
 }
 
-// ---------------------------------------------------------------------------------------- moure fitxa
+// ---------------------------------------------------------------------------------------- guardar moviments
+void Chessboard::movementsToFile(const string& nomFitxer)
+{
+	queue<string> moviments;
+	
+	// guardem els moviments previs en una queue i afegim l'ultim moviment al final
+	ifstream fitxer(nomFitxer);
+	
+	while (!fitxer.eof())
+	{
+		string moviment;
+		getline(fitxer, moviment);
+		moviments.push(moviment + "\n");
+	}
+	moviments.push(m_lastMovement);
+	
+	fitxer.close();
+	
+	// fem servir un string per eliminar les imperfeccions del 1r torn i es guarda tot al fitxer
+	ofstream file(nomFitxer);
+	string stringMoviments;
+	while (!moviments.empty())
+	{
+		stringMoviments.append(moviments.front());
+		moviments.pop();		
+	}
+
+	
+	if (m_primeraTirada)
+	{
+		stringMoviments.erase(stringMoviments.begin());
+		m_primeraTirada = false;
+	}
+
+	file << stringMoviments;
+	file.close();
+}
+
+// -------------------------------------------------------------------------------------------------------------------- moure fitxa
 bool Chessboard::MovePiece(const ChessPosition& posFrom, const ChessPosition& posTo, bool& gameOver)
 {
+	// en aquesta funcio no guardem els moviments
 	bool esPot = false;
 
 	if (GetPieceColorAtPos(posFrom) != CPC_NONE && posicioDinsVector(posTo, GetValidMoves(posFrom)))
 	{
+		m_lastMovement = posFrom.toString() + posTo.toString();
+
 		if (GetPieceTypeAtPos(posTo) == CPT_King)
 			gameOver = true;
 		setNovaPiece(posTo, m_tauler[posFrom.getPosicioX()][posFrom.getPosicioY()].getColor(), m_tauler[posFrom.getPosicioX()][posFrom.getPosicioY()].getTipus(), 1);
@@ -200,6 +241,8 @@ bool Chessboard::MovePiece(const ChessPosition& posFrom, const ChessPosition& po
 
 	return esPot;
 }
+
+
 
 
 // ---------------------------------------------------------------------------------------- taula to string
