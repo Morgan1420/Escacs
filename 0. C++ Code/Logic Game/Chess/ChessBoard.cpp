@@ -128,6 +128,60 @@ void Chessboard::LoadBoardFromFile(const string& nomFitxer)
 }
 
 
+void Chessboard::SaveBoardToFile(const string& nomFitxer) //0. Ta1
+{
+	ofstream fitxer(nomFitxer);
+
+	fitxer.clear();
+	for (int fila = 0; fila < NUM_COLS; fila++)
+	{
+		for (int col = 0; col < NUM_ROWS; col++)
+		{
+			
+			if (m_tauler[col][fila].getTipus() != CPT_EMPTY)
+			{
+				if (col != 0 || fila != 0)
+					fitxer << "\n";
+
+				// color
+				if (m_tauler[col][fila].getColor() == CPC_White)
+					fitxer << "0. ";
+				else
+					fitxer << "1. ";
+
+				// tipus
+				switch (m_tauler[col][fila].getTipus())
+				{
+				case CPT_King:
+					fitxer << "R";
+					break;
+				case CPT_Queen:
+					fitxer << "D";
+					break;
+				case CPT_Rook:
+					fitxer << "T";
+					break;
+				case CPT_Bishop:
+					fitxer << "A";
+					break;
+				case CPT_Knight:
+					fitxer << "C";
+					break;
+				case CPT_Pawn:
+					fitxer << "P";
+					break;
+				}
+
+				//Posicio
+				char lletra = 97 + col;
+				fitxer << lletra << to_string(8 - fila);
+			}
+		}
+
+	}
+	fitxer.close();
+}
+
 // ---------------------------------------------------------------------------------------- moure fitxa
 bool Chessboard::MovePiece(const ChessPosition& posFrom, const ChessPosition& posTo, bool& gameOver)
 {

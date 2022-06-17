@@ -16,7 +16,7 @@ using namespace std;
 class CurrentGame {
 
 public:
-    CurrentGame();
+    CurrentGame() {};
     
     // init, update i end
     void init(GameMode mode, const string& intitialBoardFile, const string& movementsFile);
@@ -36,6 +36,7 @@ private:
     ChessPieceColor m_torn;
     bool m_gameOver;
     int m_decisioMenu;
+    string m_initialBoardFile, m_movementsFile, m_partidaGuardada;
 };
 
 #endif /* CurrentGame_hpp */

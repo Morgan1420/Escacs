@@ -20,6 +20,7 @@ public:
 
     // Metodes de la clase
     void LoadBoardFromFile(const string& nomFitxer); // Cal copiar i modificar el metode loadFromFile de Source.cpp
+    void SaveBoardToFile(const string& nomFitxer);
     VecOfPositions GetValidMoves(const ChessPosition& pos);
     string taulaToString() const;
 

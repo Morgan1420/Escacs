@@ -11,17 +11,15 @@
 
 #include "ChessBoard.h"
 
-CurrentGame::CurrentGame()
-{
-
-}
 
 
 void CurrentGame::init(GameMode mode, const string& intitialBoardFile, const string& movementsFile)
 {
     // Dibuixem el tauler, eliminem les fitxes a resaltar i asignem el 1r torn a les blanques;
     GraphicManager::getInstance()->drawSprite(IMAGE_PIECE_PAWN_WHITE, 0, 0);
-    chessBoard.LoadBoardFromFile(intitialBoardFile);
+    m_initialBoardFile = intitialBoardFile;
+    m_movementsFile = movementsFile;
+    m_partidaGuardada = "data/Games/partida_guardada.txt";
     casellesResaltar.clear();
     m_torn = CPC_White;
     m_gameOver = false;
@@ -35,7 +33,12 @@ bool CurrentGame::updateAndRender(int mousePosX, int mousePosY, bool mouseStatus
     case 1:
         jugarPartida(mousePosX, mousePosY, mouseStatus);
         break;
-
+    case 2:
+        jugarPartida(mousePosX, mousePosY, mouseStatus);
+        break;
+    case 3:
+        //
+        //break;
     default:
         menu(mousePosX, mousePosY, mouseStatus);
     }
@@ -43,6 +46,7 @@ bool CurrentGame::updateAndRender(int mousePosX, int mousePosY, bool mouseStatus
     return m_gameOver;
 
 }
+
 // -------------------------------------------------------------------------------------- metodes de joc
 // menu principal
 void CurrentGame::menu(int mousePosX, int mousePosY, bool mouseStatus) {
@@ -56,15 +60,38 @@ void CurrentGame::menu(int mousePosX, int mousePosY, bool mouseStatus) {
     msg = "Carregea partida";
     GraphicManager::getInstance()->drawFont(FONT_RED_30, posTextX, CELL_INIT_Y + (CELL_H * 3), 0.8, msg);
 
+    msg = "Reproduir partida";
+    GraphicManager::getInstance()->drawFont(FONT_RED_30, posTextX, CELL_INIT_Y + (CELL_H * 5), 0.8, msg);
+
     // calcular si es pitja un missatge
     if (mouseStatus && (CELL_INIT_X < mousePosX) && (mousePosX < CELL_INIT_X + CELL_W * 2) && (CELL_INIT_Y + (CELL_H * 1) < mousePosY) && (mousePosY < CELL_INIT_Y + CELL_H * 2))
     {
+        // botó new game
         m_decisioMenu = 1;
+        chessBoard.LoadBoardFromFile(m_initialBoardFile);
+
+        ofstream file(m_movementsFile);
+        file.clear();
+        file.close();
     }
     else if (mouseStatus && (CELL_INIT_X < mousePosX) && (mousePosX < CELL_INIT_X + CELL_W * 3) && (CELL_INIT_Y + (CELL_H * 3) < mousePosY) && (mousePosY < CELL_INIT_Y + CELL_H * 4))
     {
+        // botó carregar joc
         m_decisioMenu = 2;
+        
+        ifstream file(m_partidaGuardada);
+        if(file.peek() == '0' || file.peek() == '1')         
+            chessBoard.LoadBoardFromFile(m_partidaGuardada);
+        else
+            chessBoard.LoadBoardFromFile(m_initialBoardFile);
 
+        file.close();
+    }
+    else if (mouseStatus && (CELL_INIT_X < mousePosX) && (mousePosX < CELL_INIT_X + CELL_W * 3) && (CELL_INIT_Y + (CELL_H * 5) < mousePosY) && (mousePosY < CELL_INIT_Y + CELL_H * 6))
+    {
+        // reproduir partida
+        m_decisioMenu = 3;
+        chessBoard.LoadBoardFromFile(m_movementsFile);
     }
 }
 
@@ -119,6 +146,8 @@ void CurrentGame::jugarPartida(int mousePosX, int mousePosY, bool mouseStatus)
                         m_torn = CPC_White;
                     else
                         m_torn = CPC_Black;
+
+                    chessBoard.SaveBoardToFile(m_partidaGuardada);
 
                 }
 
