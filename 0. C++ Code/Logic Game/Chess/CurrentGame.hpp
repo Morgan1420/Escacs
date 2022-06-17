@@ -29,7 +29,7 @@ public:
     void reproduirPartida();
 
     // prints
-    void printWinner();
+    void printWinner(int mousePosX, int mousePosY, bool mouseStatus, bool &final);
     void printTorn();
 private:
     Chessboard chessBoard;

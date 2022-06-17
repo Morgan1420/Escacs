@@ -18,6 +18,8 @@ public:
     Piece getPiece(int x, int y) { return m_tauler[x][y]; }
     ChessPosition getCasellaSeleccionada() { return m_casellaSeleccionada; }
     void setCasellaSeleccionada(ChessPosition casella) { m_casellaSeleccionada = casella; }
+    void setPrimerTorn(bool primerTorn) { m_primeraTirada = primerTorn; }
+    void taulerAZero();
 
     // Metodes amb files
     void LoadBoardFromFile(const string& nomFitxer); // Cal copiar i modificar el metode loadFromFile de Source.cpp
@@ -32,6 +34,7 @@ public:
     VecOfPositions GetValidMoves(const ChessPosition& pos);
     bool posicioValida(ChessPosition posAuxiliar, ChessPosition pos);
     bool posicioDinsVector(const ChessPosition& pos, VecOfPositions vectorPos);
+    int busquedaDeReis();
 
     // metodes directes de Piece
     ChessPieceColor GetPieceColorAtPos(ChessPosition pos) const;
@@ -52,7 +55,6 @@ private:
     ChessPosition m_casellaSeleccionada;
     bool m_gameOver;
     string m_lastMovement;
-
     bool m_primeraTirada;
 };
 

@@ -58,7 +58,7 @@ int main(int argc, const char* argv[])
         if (!final)
             final = game.updateAndRender(mousePosX, mousePosY, mouseStatus);
         else
-            game.printWinner();
+            game.printWinner(mousePosX, mousePosY, mouseStatus, final);
         // Actualitza la pantalla
         pantalla.update();
 

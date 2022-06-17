@@ -220,6 +220,19 @@ void Chessboard::movementsToFile(const string& nomFitxer)
 	file.close();
 }
 
+// ---------------------------------------------------------------------------------------- tauler a zero
+void Chessboard::taulerAZero()
+{
+	for (int row = 0; row < NUM_ROWS; row++)
+	{
+		for (int col = 0; col < NUM_COLS; col++)
+		{
+			ChessPosition pos(row, col);
+			setNovaPiece(pos, CPC_NONE, CPT_EMPTY, 0);
+		}
+	}
+}
+
 // -------------------------------------------------------------------------------------------------------------------- moure fitxa
 bool Chessboard::MovePiece(const ChessPosition& posFrom, const ChessPosition& posTo, bool& gameOver)
 {
@@ -334,6 +347,32 @@ bool Chessboard::posicioDinsVector(const ChessPosition& pos, VecOfPositions vect
 	}
 
 	return trobat;
+}
+
+// --------------------------------------------------------------------------------- busqueda de reis
+int Chessboard::busquedaDeReis()
+{
+	int contador = 0, guanyador = 0;
+
+	for (int row = 0; row < NUM_ROWS; row++) // aquests loops hourien de ser whiles
+	{
+		for (int col = 0; col < NUM_COLS; col++)
+		{
+			if (m_tauler[row][col].getTipus() == CPT_King)
+			{
+				contador++;
+
+				if (m_tauler[row][col].getColor() == CPC_Black)
+					guanyador = 2;
+				else if (m_tauler[row][col].getColor() == CPC_White)
+					guanyador = 1;
+			}
+		}
+	}
+
+	if (contador > 1)
+		return 0;
+	return guanyador;
 }
 
 // --------------------------------------------------------------------------------- render

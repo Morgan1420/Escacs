@@ -42,6 +42,7 @@ bool CurrentGame::updateAndRender(int mousePosX, int mousePosY, bool mouseStatus
         break;
     default:
         menu(mousePosX, mousePosY, mouseStatus);
+        
     }
 
     return m_gameOver;
@@ -69,7 +70,10 @@ void CurrentGame::menu(int mousePosX, int mousePosY, bool mouseStatus) {
     {
         // botó new game
         m_decisioMenu = 1;
+        m_gameOver = false;
+        chessBoard.taulerAZero();
         chessBoard.LoadBoardFromFile(m_initialBoardFile);
+        chessBoard.setPrimerTorn(true);
 
         ofstream file(m_movementsFile);
         file.clear();
@@ -81,20 +85,58 @@ void CurrentGame::menu(int mousePosX, int mousePosY, bool mouseStatus) {
         m_decisioMenu = 2;
         
         ifstream file(m_partidaGuardada);
+        ifstream fileM(m_movementsFile);
         if (file.peek() == '0' || file.peek() == '1')
         {
+            chessBoard.taulerAZero();
             chessBoard.LoadBoardFromFile(m_partidaGuardada);
+            chessBoard.setPrimerTorn(false);
 
+            // busquem si segueixen vius els reis i quin no ho està
+            switch(chessBoard.busquedaDeReis())
+            { 
+            case 1:
+                m_torn = CPC_Black;
+                m_gameOver = true;
+                break;
+            case 2:
+                m_torn = CPC_White;
+                m_gameOver = true;
+                break;
+            default:
+                string nextMovement, x, y, pos;
+                
+                getline(fileM, nextMovement);
+                
+                x = nextMovement.at(2);
+                y = nextMovement.at(3);
+                pos = x + y;
+                
+                ChessPosition posTo(pos);
+                
+                if (chessBoard.GetPieceColorAtPos(posTo) == CPC_Black)
+                    m_torn = CPC_White;
+                else
+                    m_torn = CPC_Black;
+
+
+                m_gameOver = false;
+            }
         }
         else
+        {
+            chessBoard.setPrimerTorn(true);
+            chessBoard.taulerAZero();
             chessBoard.LoadBoardFromFile(m_initialBoardFile);
-
+            m_gameOver = false;
+        }
         file.close();
     }
     else if (mouseStatus && (CELL_INIT_X < mousePosX) && (mousePosX < CELL_INIT_X + CELL_W * 3) && (CELL_INIT_Y + (CELL_H * 5) < mousePosY) && (mousePosY < CELL_INIT_Y + CELL_H * 6))
     {
         // reproduir partida
         m_decisioMenu = 3;
+        chessBoard.taulerAZero();
         chessBoard.LoadBoardFromFile(m_initialBoardFile);
 
         ifstream file(m_movementsFile);
@@ -217,12 +259,23 @@ void CurrentGame::reproduirPartida()
 
 
 // -------------------------------------------------------------------------------------- prints 
-void CurrentGame::printWinner()
+void CurrentGame::printWinner(int mousePosX, int mousePosY, bool mouseStatus, bool& final)
 {
     std::string guanyador (m_torn == CPC_White ? "Negres" : "Blanques");
     std::string msg = "Guanyen les " + guanyador + "!!";
     
     GraphicManager::getInstance()->drawFont(FONT_RED_30, 50, 260, 2, msg);
+
+    msg = "Tornar al menu!!";
+    GraphicManager::getInstance()->drawFont(FONT_RED_30, CELL_INIT_X + (CELL_W * 3), CELL_INIT_Y + (CELL_H * 7), 0.8, msg);
+
+    // calcular si es pitja un missatge
+    if (mouseStatus && (CELL_INIT_X + CELL_W * 3 < mousePosX) && (mousePosX < CELL_INIT_X + CELL_W * 5) && (CELL_INIT_Y + (CELL_H * 7) < mousePosY) && (mousePosY < CELL_INIT_Y + CELL_H * 8))
+    {
+        m_decisioMenu = 0;
+        m_gameOver = false;
+        final = m_gameOver;
+    }
 }
 
 void CurrentGame::printTorn()
