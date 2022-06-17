@@ -127,14 +127,122 @@ void Chessboard::LoadBoardFromFile(const string& nomFitxer)
 	fitxer.close();
 }
 
+// ---------------------------------------------------------------------------------------- guardar a Arxiu
+void Chessboard::SaveBoardToFile(const string& nomFitxer) //0. Ta1
+{
+	ofstream fitxer(nomFitxer);
 
-// ---------------------------------------------------------------------------------------- moure fitxa
+	fitxer.clear();
+	for (int fila = 0; fila < NUM_COLS; fila++)
+	{
+		for (int col = 0; col < NUM_ROWS; col++)
+		{
+			
+			if (m_tauler[col][fila].getTipus() != CPT_EMPTY)
+			{
+				if (col != 0 || fila != 0)
+					fitxer << "\n";
+
+				// color
+				if (m_tauler[col][fila].getColor() == CPC_White)
+					fitxer << "0. ";
+				else
+					fitxer << "1. ";
+
+				// tipus
+				switch (m_tauler[col][fila].getTipus())
+				{
+				case CPT_King:
+					fitxer << "R";
+					break;
+				case CPT_Queen:
+					fitxer << "D";
+					break;
+				case CPT_Rook:
+					fitxer << "T";
+					break;
+				case CPT_Bishop:
+					fitxer << "A";
+					break;
+				case CPT_Knight:
+					fitxer << "C";
+					break;
+				case CPT_Pawn:
+					fitxer << "P";
+					break;
+				}
+
+				//Posicio
+				char lletra = 97 + col;
+				fitxer << lletra << to_string(8 - fila);
+			}
+		}
+
+	}
+	fitxer.close();
+}
+
+// ---------------------------------------------------------------------------------------- guardar moviments
+void Chessboard::movementsToFile(const string& nomFitxer)
+{
+	queue<string> moviments;
+	
+	// guardem els moviments previs en una queue i afegim l'ultim moviment al final
+	ifstream fitxer(nomFitxer);
+	
+	while (!fitxer.eof())
+	{
+		string moviment;
+		getline(fitxer, moviment);
+		moviments.push(moviment + "\n");
+	}
+	moviments.push(m_lastMovement);
+	
+	fitxer.close();
+	
+	// fem servir un string per eliminar les imperfeccions del 1r torn i es guarda tot al fitxer
+	ofstream file(nomFitxer);
+	string stringMoviments;
+	while (!moviments.empty())
+	{
+		stringMoviments.append(moviments.front());
+		moviments.pop();		
+	}
+
+	
+	if (m_primeraTirada)
+	{
+		stringMoviments.erase(stringMoviments.begin());
+		m_primeraTirada = false;
+	}
+
+	file << stringMoviments;
+	file.close();
+}
+
+// ---------------------------------------------------------------------------------------- tauler a zero
+void Chessboard::taulerAZero()
+{
+	for (int row = 0; row < NUM_ROWS; row++)
+	{
+		for (int col = 0; col < NUM_COLS; col++)
+		{
+			ChessPosition pos(row, col);
+			setNovaPiece(pos, CPC_NONE, CPT_EMPTY, 0);
+		}
+	}
+}
+
+// -------------------------------------------------------------------------------------------------------------------- moure fitxa
 bool Chessboard::MovePiece(const ChessPosition& posFrom, const ChessPosition& posTo, bool& gameOver)
 {
+	// en aquesta funcio no guardem els moviments
 	bool esPot = false;
 
 	if (GetPieceColorAtPos(posFrom) != CPC_NONE && posicioDinsVector(posTo, GetValidMoves(posFrom)))
 	{
+		m_lastMovement = posFrom.toString() + posTo.toString();
+
 		if (GetPieceTypeAtPos(posTo) == CPT_King)
 			gameOver = true;
 		setNovaPiece(posTo, m_tauler[posFrom.getPosicioX()][posFrom.getPosicioY()].getColor(), m_tauler[posFrom.getPosicioX()][posFrom.getPosicioY()].getTipus(), 1);
@@ -146,6 +254,8 @@ bool Chessboard::MovePiece(const ChessPosition& posFrom, const ChessPosition& po
 
 	return esPot;
 }
+
+
 
 
 // ---------------------------------------------------------------------------------------- taula to string
@@ -237,6 +347,32 @@ bool Chessboard::posicioDinsVector(const ChessPosition& pos, VecOfPositions vect
 	}
 
 	return trobat;
+}
+
+// --------------------------------------------------------------------------------- busqueda de reis
+int Chessboard::busquedaDeReis()
+{
+	int contador = 0, guanyador = 0;
+
+	for (int row = 0; row < NUM_ROWS; row++) // aquests loops hourien de ser whiles
+	{
+		for (int col = 0; col < NUM_COLS; col++)
+		{
+			if (m_tauler[row][col].getTipus() == CPT_King)
+			{
+				contador++;
+
+				if (m_tauler[row][col].getColor() == CPC_Black)
+					guanyador = 2;
+				else if (m_tauler[row][col].getColor() == CPC_White)
+					guanyador = 1;
+			}
+		}
+	}
+
+	if (contador > 1)
+		return 0;
+	return guanyador;
 }
 
 // --------------------------------------------------------------------------------- render

@@ -1,6 +1,7 @@
 #pragma once
 #include "Piece.h"
 #include "ChessPosition.h"
+#include <queue>
 
 #define NUM_ROWS 8
 #define NUM_COLS 8
@@ -11,22 +12,29 @@ class Chessboard
 {
 public:   
     // Constructor
-    Chessboard() : m_gameOver(false) {}
+    Chessboard() : m_gameOver(false), m_primeraTirada(true) {}
 
     // Getters i Setters
     Piece getPiece(int x, int y) { return m_tauler[x][y]; }
     ChessPosition getCasellaSeleccionada() { return m_casellaSeleccionada; }
     void setCasellaSeleccionada(ChessPosition casella) { m_casellaSeleccionada = casella; }
+    void setPrimerTorn(bool primerTorn) { m_primeraTirada = primerTorn; }
+    void taulerAZero();
 
-    // Metodes de la clase
+    // Metodes amb files
     void LoadBoardFromFile(const string& nomFitxer); // Cal copiar i modificar el metode loadFromFile de Source.cpp
-    VecOfPositions GetValidMoves(const ChessPosition& pos);
+    void SaveBoardToFile(const string& nomFitxer);
+    void movementsToFile(const string& nomFitxer);
+
+    // visualització
+    void render();
     string taulaToString() const;
 
     // Metodes auxiliars
+    VecOfPositions GetValidMoves(const ChessPosition& pos);
     bool posicioValida(ChessPosition posAuxiliar, ChessPosition pos);
-    void render();
     bool posicioDinsVector(const ChessPosition& pos, VecOfPositions vectorPos);
+    int busquedaDeReis();
 
     // metodes directes de Piece
     ChessPieceColor GetPieceColorAtPos(ChessPosition pos) const;
@@ -46,6 +54,8 @@ private:
     Piece m_tauler[NUM_COLS][NUM_ROWS];
     ChessPosition m_casellaSeleccionada;
     bool m_gameOver;
+    string m_lastMovement;
+    bool m_primeraTirada;
 };
 
 

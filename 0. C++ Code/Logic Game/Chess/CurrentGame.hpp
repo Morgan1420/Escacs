@@ -16,19 +16,29 @@ using namespace std;
 class CurrentGame {
 
 public:
-    CurrentGame();
+    CurrentGame() {};
     
+    // init, update i end
     void init(GameMode mode, const string& intitialBoardFile, const string& movementsFile);
 	bool updateAndRender(int mousePosX, int mousePosY, bool mouseStatus);
-    void printWinner ();
     void end();  
 
-    
+    // metodes de joc
+    void jugarPartida(int mousePosX, int mousePosY, bool mouseStatus);
+    void menu(int mousePosX, int mousePosY, bool mouseStatus);
+    void reproduirPartida();
+
+    // prints
+    void printWinner(int mousePosX, int mousePosY, bool mouseStatus, bool &final);
+    void printTorn();
 private:
     Chessboard chessBoard;
     VecOfPositions casellesResaltar;
     ChessPieceColor m_torn;
     bool m_gameOver;
+    int m_decisioMenu;
+    string m_initialBoardFile, m_movementsFile, m_partidaGuardada;
+    queue<string> m_moviments;
 };
 
 #endif /* CurrentGame_hpp */
