@@ -83,7 +83,6 @@ void CurrentGame::menu(int mousePosX, int mousePosY, bool mouseStatus) {
     {
         // botó carregar joc
         m_decisioMenu = 2;
-        
         ifstream file(m_partidaGuardada);
         ifstream fileM(m_movementsFile);
         if (file.peek() == '0' || file.peek() == '1')
@@ -138,6 +137,7 @@ void CurrentGame::menu(int mousePosX, int mousePosY, bool mouseStatus) {
         m_decisioMenu = 3;
         chessBoard.taulerAZero();
         chessBoard.LoadBoardFromFile(m_initialBoardFile);
+        m_torn = CPC_White;
 
         ifstream file(m_movementsFile);
         while (!file.eof())
@@ -155,6 +155,7 @@ void CurrentGame::jugarPartida(int mousePosX, int mousePosY, bool mouseStatus)
 {
     // Renderitzat de les fitxes
     GraphicManager::getInstance()->drawSprite(IMAGE_BOARD, 0, 0);
+    printGameMode();
     chessBoard.render();
     for (int i = 0; i < casellesResaltar.size(); i++)
         GraphicManager::getInstance()->drawSprite(IMAGE_VALID_POS, CELL_INIT_X + CELL_W * casellesResaltar.at(i).getPosicioX(), CELL_INIT_Y + CELL_H * casellesResaltar.at(i).getPosicioY());
@@ -224,9 +225,11 @@ void CurrentGame::reproduirPartida()
 {
     // Renderitzat de les fitxes
     GraphicManager::getInstance()->drawSprite(IMAGE_BOARD, 0, 0);
+    printTorn();
+    printGameMode();
     chessBoard.render();
 
-    if (Keyboard_GetKeyTrg(KEYBOARD_SPACE) && m_moviments.size() != 0)
+    if (Keyboard_GetKeyTrg(KEYBOARD_SPACE) && !m_moviments.empty())
     {
         string nextMovement = m_moviments.front();
 
@@ -245,13 +248,21 @@ void CurrentGame::reproduirPartida()
         pos = x + y;
         ChessPosition posTo(pos);
 
-    
         // movem la peça que toca
         chessBoard.MovePiece(posFrom, posTo, m_gameOver);
 
         // eliminem el moviment de la queue
         m_moviments.pop();
+        
+
+        if (m_torn == CPC_Black)
+            m_torn = CPC_White;
+        else
+            m_torn = CPC_Black;
     }
+
+    if (m_moviments.empty())
+        printReproducioAcabada();
 
 
     
@@ -288,6 +299,24 @@ void CurrentGame::printTorn()
     GraphicManager::getInstance()->drawFont(FONT_RED_30, posTextX, posTextY, 0.8, msg);
 }
 
+void CurrentGame::printGameMode()
+{
+    int posTextX = CELL_INIT_X;
+    int posTextY = CELL_INIT_Y + (CELL_H * (NUM_ROWS)) + 100;
+
+    std::string gameMode(m_decisioMenu == 3 ? "RePlay" : "Normal");
+    std::string msg = "Game Mode: " + gameMode;
+    GraphicManager::getInstance()->drawFont(FONT_RED_30, posTextX, posTextY, 0.8, msg);
+}
+
+void CurrentGame::printReproducioAcabada()
+{
+    int posTextX = CELL_INIT_X;
+    int posTextY = CELL_INIT_Y + (CELL_H * (NUM_ROWS)) + 140;
+
+    std::string msg = "No more moves to replay";
+    GraphicManager::getInstance()->drawFont(FONT_RED_30, posTextX, posTextY, 0.8, msg);
+}
 // -------------------------------------------------------------------------------------- end
 void CurrentGame::end()
 {

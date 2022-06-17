@@ -23,7 +23,7 @@ const int GREEN_INIT_Y = 67;
 
 // Tamany en píxels de la pantalla
 const int SCREEN_SIZE_X = 750;
-const int SCREEN_SIZE_Y = 700;
+const int SCREEN_SIZE_Y = 750;
 
 typedef enum {
     GM_NORMAL,
