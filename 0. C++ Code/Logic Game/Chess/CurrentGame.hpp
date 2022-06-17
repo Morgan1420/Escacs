@@ -31,6 +31,8 @@ public:
     // prints
     void printWinner(int mousePosX, int mousePosY, bool mouseStatus, bool &final);
     void printTorn();
+    void printGameMode();
+    void printReproducioAcabada();
 private:
     Chessboard chessBoard;
     VecOfPositions casellesResaltar;
